@@ -18,7 +18,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthenticationProvider provider;
 
-    private static final String PROTECT_URL = "/api/*";
+    private static final String PROTECT_URL = "/api/**";
 
     @Bean(name = "bCryptPasswordEncoder")
     public PasswordEncoder bCryptPasswordEncoder() {
@@ -36,7 +36,9 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher(PROTECT_URL)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/register*", "/login*", "/api/products*").permitAll();
+                .antMatchers("/register*", "/login*").permitAll()
+                .antMatchers("/api/products/list").hasAnyRole("ADMIN")
+        ;//, "/api/products*"
     }
 
     @Bean

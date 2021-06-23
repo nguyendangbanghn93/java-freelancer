@@ -41,7 +41,7 @@ public class GenerateController {
                 new Product("Nồi cơm Happy Cook", 5000000)
         );
         productService.create(products);
-        accountService.createAcount("bangnd",  "Nguyễn Đăng Bằng","123456",1,1);
+        accountService.createAcount("hongluyen2",  "Hồng luyến ","123456",1,1);
         accountService.createAcount("minhduc",  "Minh Đức","123456",1,0);
         accountService.createAcount("hongtruong",  "Hồng Trường","123456",2,1);
         accountService.createAcount("tuankien",  "Tuấn Kiên","123456",2,0);

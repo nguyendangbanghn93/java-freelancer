@@ -13,8 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Component
 public class AuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+    private static Logger LOGGER = Logger.getLogger(AuthenticationProvider.class.getName());
     @Autowired
     private AccountService accountService;
 
@@ -24,6 +28,7 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
     }
     @Override
     protected UserDetails retrieveUser(String s, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
+
         Object credentials = usernamePasswordAuthenticationToken.getCredentials();
         if(credentials == null) {
             throw new UsernameNotFoundException("Credential not found!");
@@ -33,6 +38,8 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
         if(account == null) {
             return null;
         }
+        LOGGER.log(Level.SEVERE, "account " + account.getRole());
+        System.out.println("ROLE: "+account.getRoleName());
         UserDetails userDetails = User.builder()
                 .username(account.getUsername())
                 .password(account.getPasswordHash())
