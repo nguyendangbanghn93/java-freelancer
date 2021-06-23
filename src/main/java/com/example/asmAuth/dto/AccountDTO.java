@@ -2,13 +2,18 @@ package com.example.asmAuth.dto;
 
 import com.example.asmAuth.entity.Account;
 import com.example.asmAuth.entity.Credential;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.Set;
-
+@Getter
+@Setter
+@AllArgsConstructor
 public class AccountDTO {
     private int id;
     private String username;
@@ -18,6 +23,7 @@ public class AccountDTO {
     private int role;
     private int status;
     public AccountDTO(Account account) {
+
         this.id = account.getId();
         this.username = account.getUsername();
         this.fullName = account.getFullName();

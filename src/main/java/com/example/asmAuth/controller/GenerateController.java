@@ -47,4 +47,8 @@ public class GenerateController {
         accountService.createAcount("tuankien",  "Tuấn Kiên","123456",2,0);
         return true;
     }
+    @RequestMapping(method = RequestMethod.GET,value = "/test")
+    public String test() {
+        return "Test thành công";
+    }
 }

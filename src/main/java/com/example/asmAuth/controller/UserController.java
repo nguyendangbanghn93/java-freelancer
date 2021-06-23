@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private AccountService accountService;
+
     @RequestMapping(value = "/information", method = RequestMethod.GET)
     public AccountDTO getInformation(@RequestHeader("Authorization") String token) {
-        Account byToken = accountService.findByToken(token.replace("Bearer", "").trim());
-        return new AccountDTO(byToken);
+        Account account = accountService.findByToken(token.replace("Bearer", "").trim());
+        System.out.println("tài khoản tương ứng: " + account.toString()); // Đã lấy được tên là hông luyến
+        return new AccountDTO(account);
     }
 }

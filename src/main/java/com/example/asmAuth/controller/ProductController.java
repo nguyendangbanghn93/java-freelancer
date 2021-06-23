@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/products")
 public class ProductController {
     @Autowired
     ProductService productService;
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET,value = "/list")
     public Iterable<Product> list() {
+        System.out.println("List danh sách");
         return productService.list();
     }
 }

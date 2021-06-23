@@ -26,9 +26,13 @@ public class AccountService {
     private CredentialRepository credentialRepository;
 
     public Account findByToken(String accessToken) {
+        System.out.println("token vào accountService: "+accessToken);
         Optional<Credential> credentialOptional = credentialRepository.findById(accessToken);
+        System.out.println("token vào accountService: "+accessToken); //2118b1e0-2f41-4e0c-a952-0465153fea72 (Có trong cơ sở dữ liệu)
         if (credentialOptional.isPresent()) {
             Credential credential = credentialOptional.get();
+            //có chạy vào đây
+            System.out.println("Có tài khoản không: " +credential.getAccountId()); //acount id = 6
             if (credential.isExpired()) {
                 return null;
             }
