@@ -15,26 +15,33 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
-    private String fullName;
+    private String email;
     private String passwordHash;
-    private int status;
+    private Status status;
+    private Role role;
     private Date createdAt;
     private  Date updatedAt;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private Set<Credential> credentials;
-    private int role;
 
-    public String getRoleName() {
-        switch (role){
-            case 1:
-                return  "ADMIN";
-            case 2:
-                return  "USER";
-            case 3:
-                return "FREELANCER";
-            default:
-                return "GUEST";
-        }
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Freelancer freelancer;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Job> jobSet;
+
+    public enum Status {
+        ACTIVATE,
+        DEACTIVATE,
+        DELETE,
+    }
+
+    public enum Role {
+        ADMIN,
+        USER,
+        FREELANCER
     }
 }
 

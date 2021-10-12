@@ -40,11 +40,10 @@ public class AccountService {
         }
         return null;
     }
-    public Account createAcount(String username, String fullname, String password, int role, int status) {
+    public Account createAcount(String username, String fullname, String password, Account.Role role, Account.Status status) {
         Account account = new Account();
         account.setUsername(username);
         account.setPasswordHash(passwordEncoder.encode(password));
-        account.setFullName(fullname);
         account.setRole(role);
         account.setStatus(status);
         account.setCreatedAt(new Date());
@@ -53,14 +52,12 @@ public class AccountService {
     }
     public Account register(LoginDTO loginDTO) {
         Account account = new Account();
-        account.setRole(1);
+        account.setRole(Account.Role.ADMIN);
         account.setUsername(loginDTO.getUsername());
         account.setPasswordHash(passwordEncoder.encode(loginDTO.getPassword()));
-        account.setFullName("full name");
-        account.setStatus(1);
+        account.setStatus(Account.Status.ACTIVATE);
         account.setCreatedAt(new Date());
         account.setUpdatedAt(new Date());
-        account.setFullName(loginDTO.getFullName());
         return accountRepository.save(account);
     }
 
@@ -82,5 +79,8 @@ public class AccountService {
         Credential saved = credentialRepository.save(credential);
         return new CredentialDTO(saved);
 
+    }
+    public long count(){
+        return accountRepository.count();
     }
 }
