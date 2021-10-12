@@ -52,7 +52,7 @@ public class AccountService {
     }
     public Account register(LoginDTO loginDTO) {
         Account account = new Account();
-        account.setRole(Account.Role.ADMIN);
+        account.setRole(Account.Role.USER);
         account.setUsername(loginDTO.getUsername());
         account.setPasswordHash(passwordEncoder.encode(loginDTO.getPassword()));
         account.setStatus(Account.Status.ACTIVATE);
