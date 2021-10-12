@@ -24,6 +24,7 @@ public class AccountController {
         return credential;
     }
 
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public AccountDTO register(@RequestBody LoginDTO loginDTO) {
         Account register = accountService.register(loginDTO);
