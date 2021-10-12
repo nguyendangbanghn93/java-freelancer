@@ -1,7 +1,7 @@
-package com.example.asmAuth.repository;
+package com.example.freelancer.repository;
 
 
-import com.example.asmAuth.entity.Product;
+import com.example.freelancer.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

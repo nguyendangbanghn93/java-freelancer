@@ -1,4 +1,4 @@
-package com.example.asmAuth.config;
+package com.example.freelancer.config;
 
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

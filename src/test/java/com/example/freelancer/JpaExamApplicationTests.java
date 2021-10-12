@@ -1,4 +1,4 @@
-package com.example.asmAuth;
+package com.example.freelancer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

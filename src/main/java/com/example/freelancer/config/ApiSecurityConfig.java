@@ -1,4 +1,4 @@
-package com.example.asmAuth.config;
+package com.example.freelancer.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

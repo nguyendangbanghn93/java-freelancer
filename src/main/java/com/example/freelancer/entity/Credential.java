@@ -1,4 +1,4 @@
-package com.example.asmAuth.entity;
+package com.example.freelancer.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

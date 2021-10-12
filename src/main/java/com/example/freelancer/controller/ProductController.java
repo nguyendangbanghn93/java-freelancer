@@ -1,8 +1,8 @@
-package com.example.asmAuth.controller;
+package com.example.freelancer.controller;
 
 
-import com.example.asmAuth.entity.Product;
-import com.example.asmAuth.service.ProductService;
+import com.example.freelancer.entity.Product;
+import com.example.freelancer.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;

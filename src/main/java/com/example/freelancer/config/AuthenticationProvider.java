@@ -1,8 +1,8 @@
-package com.example.asmAuth.config;
+package com.example.freelancer.config;
 
 
-import com.example.asmAuth.entity.Account;
-import com.example.asmAuth.service.AccountService;
+import com.example.freelancer.entity.Account;
+import com.example.freelancer.service.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

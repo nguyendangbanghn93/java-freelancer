@@ -1,16 +1,12 @@
-package com.example.asmAuth.dto;
+package com.example.freelancer.dto;
 
-import com.example.asmAuth.entity.Account;
-import com.example.asmAuth.entity.Credential;
+import com.example.freelancer.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.util.Date;
-import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor

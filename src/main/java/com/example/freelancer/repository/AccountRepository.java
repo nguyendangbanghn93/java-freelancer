@@ -1,6 +1,6 @@
-package com.example.asmAuth.repository;
+package com.example.freelancer.repository;
 
-import com.example.asmAuth.entity.Account;
+import com.example.freelancer.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,9 +1,10 @@
-package com.example.asmAuth.controller;
+package com.example.freelancer.controller;
 
-import com.example.asmAuth.dto.CredentialDTO;
-import com.example.asmAuth.dto.LoginDTO;
-import com.example.asmAuth.entity.Account;
-import com.example.asmAuth.service.AccountService;
+import com.example.freelancer.dto.AccountDTO;
+import com.example.freelancer.dto.CredentialDTO;
+import com.example.freelancer.dto.LoginDTO;
+import com.example.freelancer.entity.Account;
+import com.example.freelancer.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,11 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@RequestBody LoginDTO loginDTO) {
+    public AccountDTO register(@RequestBody LoginDTO loginDTO) {
         Account register = accountService.register(loginDTO);
         if (register == null) {
-            return "failed";
+            return null;
         }
-        return "ok";
+        return new AccountDTO(register);
     }
 }

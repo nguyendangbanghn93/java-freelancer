@@ -1,7 +1,7 @@
-package com.example.asmAuth.service;
+package com.example.freelancer.service;
 
-import com.example.asmAuth.entity.Product;
-import com.example.asmAuth.repository.ProductRepository;
+import com.example.freelancer.entity.Product;
+import com.example.freelancer.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;

@@ -1,12 +1,12 @@
-package com.example.asmAuth.service;
+package com.example.freelancer.service;
 
-import com.example.asmAuth.dto.CredentialDTO;
-import com.example.asmAuth.dto.LoginDTO;
-import com.example.asmAuth.entity.Account;
-import com.example.asmAuth.entity.Credential;
-import com.example.asmAuth.repository.AccountRepository;
-import com.example.asmAuth.repository.CredentialRepository;
-import com.example.asmAuth.util.TimeUtil;
+import com.example.freelancer.dto.CredentialDTO;
+import com.example.freelancer.dto.LoginDTO;
+import com.example.freelancer.entity.Account;
+import com.example.freelancer.entity.Credential;
+import com.example.freelancer.repository.AccountRepository;
+import com.example.freelancer.repository.CredentialRepository;
+import com.example.freelancer.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

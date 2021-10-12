@@ -1,4 +1,4 @@
-package com.example.asmAuth.entity;
+package com.example.freelancer.entity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +25,16 @@ public class Account {
     private int role;
 
     public String getRoleName() {
-        return role == 1 ? "ADMIN" : "USER";
+        switch (role){
+            case 1:
+                return  "ADMIN";
+            case 2:
+                return  "USER";
+            case 3:
+                return "FREELANCER";
+            default:
+                return "GUEST";
+        }
     }
 }
 

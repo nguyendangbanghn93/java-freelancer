@@ -1,4 +1,4 @@
-package com.example.asmAuth.dto;
+package com.example.freelancer.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

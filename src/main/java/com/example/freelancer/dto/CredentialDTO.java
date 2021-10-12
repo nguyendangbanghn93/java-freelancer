@@ -1,5 +1,5 @@
-package com.example.asmAuth.dto;
-import com.example.asmAuth.entity.Credential;
+package com.example.freelancer.dto;
+import com.example.freelancer.entity.Credential;
 import lombok.*;
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.example.asmAuth;
+package com.example.freelancer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
