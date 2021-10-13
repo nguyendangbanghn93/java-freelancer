@@ -37,6 +37,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/register*", "/login*").permitAll()
+                .antMatchers("/api/users/information").authenticated()
                 .antMatchers("/api/test/admin").hasAnyRole("ADMIN")
         ;//, "/api/products*"
     }
