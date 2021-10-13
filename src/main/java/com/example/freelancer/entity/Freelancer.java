@@ -1,9 +1,6 @@
 package com.example.freelancer.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 public class Freelancer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +30,11 @@ public class Freelancer {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     private Account account;
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Column(insertable = false, updatable = false)
     private int accountId;
 
