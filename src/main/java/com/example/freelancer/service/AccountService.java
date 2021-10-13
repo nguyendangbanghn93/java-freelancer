@@ -10,6 +10,7 @@ import com.example.freelancer.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,13 +27,13 @@ public class AccountService {
     private CredentialRepository credentialRepository;
 
     public Account findByToken(String accessToken) {
-        System.out.println("token vào accountService: "+accessToken);
+        System.out.println("token vào accountService: " + accessToken);
         Optional<Credential> credentialOptional = credentialRepository.findById(accessToken);
-        System.out.println("token vào accountService: "+accessToken); //2118b1e0-2f41-4e0c-a952-0465153fea72 (Có trong cơ sở dữ liệu)
+        System.out.println("token vào accountService: " + accessToken); //2118b1e0-2f41-4e0c-a952-0465153fea72 (Có trong cơ sở dữ liệu)
         if (credentialOptional.isPresent()) {
             Credential credential = credentialOptional.get();
             //có chạy vào đây
-            System.out.println("Có tài khoản không: " +credential.getAccountId()); //acount id = 6
+            System.out.println("Có tài khoản không: " + credential.getAccountId()); //acount id = 6
             if (credential.isExpired()) {
                 return null;
             }
@@ -40,6 +41,7 @@ public class AccountService {
         }
         return null;
     }
+
     public Account createAcount(String username, String fullname, String password, Account.Role role, Account.Status status) {
         Account account = new Account();
         account.setUsername(username);
@@ -50,10 +52,12 @@ public class AccountService {
         account.setUpdatedAt(new Date());
         return accountRepository.save(account);
     }
+
     public Account register(LoginDTO loginDTO) {
         Account account = new Account();
         account.setRole(Account.Role.USER);
         account.setUsername(loginDTO.getUsername());
+        account.setEmail(loginDTO.getEmail());
         account.setPasswordHash(passwordEncoder.encode(loginDTO.getPassword()));
         account.setStatus(Account.Status.ACTIVATE);
         account.setCreatedAt(new Date());
@@ -62,9 +66,11 @@ public class AccountService {
     }
 
     public CredentialDTO login(LoginDTO loginDTO) {
-        Optional<Account> accountOptional = accountRepository.findAccountByUsername(loginDTO.getUsername());
+        Optional<Account> accountOptional = accountRepository.findAccountByEmail(loginDTO.getEmail());
         if (!accountOptional.isPresent()) {
-            return null;
+            accountOptional = accountRepository.findAccountByUsername(loginDTO.getUsername());
+            if (!accountOptional.isPresent())
+                return null;
         }
         Account account = accountOptional.get();
         if (!passwordEncoder.matches(loginDTO.getPassword(), account.getPasswordHash())) {
@@ -80,7 +86,8 @@ public class AccountService {
         return new CredentialDTO(saved);
 
     }
-    public long count(){
+
+    public long count() {
         return accountRepository.count();
     }
 }

@@ -24,7 +24,7 @@ public class Freelancer {
     private String experience;
     private String description;
     private String title;
-    private String school;
+    private double averageIncome;
     private String language;
     private double rate;
     private Status status;

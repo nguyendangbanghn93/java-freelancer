@@ -1,5 +1,7 @@
 package com.example.freelancer.entity;
+
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,13 +16,16 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String username;
+    @NotNull
     private String email;
+    @NotNull
     private String passwordHash;
     private Status status;
     private Role role;
     private Date createdAt;
-    private  Date updatedAt;
+    private Date updatedAt;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private Set<Credential> credentials;
