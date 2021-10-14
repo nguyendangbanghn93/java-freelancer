@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseAPI<T> {
-    private T object;
+    private T data;
     private String message;
     private int code;
 }

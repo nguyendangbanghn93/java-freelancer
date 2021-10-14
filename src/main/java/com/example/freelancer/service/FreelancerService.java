@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Configurable
@@ -59,6 +60,9 @@ public class FreelancerService {
         if (id == null) {
             return null;
         }
-        return freelancerRepository.findById(id).get();
+        if (freelancerRepository.existsById(id)) {
+            return freelancerRepository.findById(id).get();
+        }
+        return null;
     }
 }
