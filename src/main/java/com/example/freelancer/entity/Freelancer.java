@@ -1,5 +1,6 @@
 package com.example.freelancer.entity;
 
+import com.example.freelancer.dto.FreelancerDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Freelancer {
     private double averageIncome;
     private String language;
     private double rate;
+    private String thumbnail;
     private Status status;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -51,5 +53,38 @@ public class Freelancer {
         ACTIVATE,
         DEACTIVATE,
         DELETE,
+    }
+
+    public FreelancerDTO toFreelancerDTO() {
+        FreelancerDTO freelancerDTO = new FreelancerDTO();
+        freelancerDTO.setName(this.name);
+        freelancerDTO.setAddress(this.address);
+        freelancerDTO.setGender(this.gender);
+        freelancerDTO.setPhone(this.phone);
+        freelancerDTO.setExperience(this.experience);
+        freelancerDTO.setDescription(this.description);
+        freelancerDTO.setTitle(this.title);
+        freelancerDTO.setAverageIncome(this.averageIncome);
+        freelancerDTO.setLanguage(this.language);
+        freelancerDTO.setRate(this.rate);
+        freelancerDTO.setStatus(this.status);
+        freelancerDTO.setThumbnail(this.thumbnail);
+        return freelancerDTO;
+    }
+
+    public Freelancer(String name, String address, Gender gender, String phone, String experience, String description, String title, double averageIncome, String language, double rate, String thumbnail, Status status, int accountId) {
+        this.name = name;
+        this.address = address;
+        this.gender = gender;
+        this.phone = phone;
+        this.experience = experience;
+        this.description = description;
+        this.title = title;
+        this.averageIncome = averageIncome;
+        this.language = language;
+        this.rate = rate;
+        this.thumbnail = thumbnail;
+        this.status = status;
+        this.accountId = accountId;
     }
 }

@@ -53,6 +53,10 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    public Account createAcount2(Account account) {
+        return accountRepository.save(account);
+    }
+
     public Account register(LoginDTO loginDTO) {
         Account account = new Account();
         account.setRole(Account.Role.USER);

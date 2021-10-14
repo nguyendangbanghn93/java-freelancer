@@ -48,6 +48,14 @@ public class Account {
         USER,
         FREELANCER
     }
+
+    public Account(@NotNull String username, @NotNull String email, @NotNull String passwordHash, Status status, Role role) {
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.status = status;
+        this.role = role;
+    }
 }
 
 

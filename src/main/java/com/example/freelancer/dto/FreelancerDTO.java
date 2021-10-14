@@ -4,11 +4,13 @@ import com.example.freelancer.entity.Account;
 import com.example.freelancer.entity.Freelancer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class FreelancerDTO {
     private String name;
     private String address;
@@ -21,6 +23,7 @@ public class FreelancerDTO {
     private String language;
     private double rate;
     private Freelancer.Status status;
+    private String thumbnail;
     private AccountDTO account;
     public FreelancerDTO(Freelancer freelancer){
         this.name = freelancer.getName();
@@ -35,5 +38,6 @@ public class FreelancerDTO {
         this.rate = freelancer.getRate();
         this.status = freelancer.getStatus();
         this.account = new AccountDTO(freelancer.getAccount());
+        this.thumbnail = freelancer.getThumbnail();
     }
 }
