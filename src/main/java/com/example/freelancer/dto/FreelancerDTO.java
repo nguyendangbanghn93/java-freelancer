@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FreelancerDTO {
+    private int id;
     private String name;
     private String address;
     private Freelancer.Gender gender;
@@ -26,6 +27,7 @@ public class FreelancerDTO {
     private String thumbnail;
     private AccountDTO account;
     public FreelancerDTO(Freelancer freelancer){
+        this.id = freelancer.getId();
         this.name = freelancer.getName();
         this.address = freelancer.getAddress();
         this.gender = freelancer.getGender();

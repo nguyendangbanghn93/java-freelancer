@@ -57,6 +57,7 @@ public class Freelancer {
 
     public FreelancerDTO toFreelancerDTO() {
         FreelancerDTO freelancerDTO = new FreelancerDTO();
+        freelancerDTO.setId(this.id);
         freelancerDTO.setName(this.name);
         freelancerDTO.setAddress(this.address);
         freelancerDTO.setGender(this.gender);
