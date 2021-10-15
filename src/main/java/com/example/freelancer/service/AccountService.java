@@ -61,6 +61,7 @@ public class AccountService {
         Account account = new Account();
         account.setRole(Account.Role.USER);
         account.setUsername(loginDTO.getUsername());
+        account.setAmount((double) 0);
         account.setEmail(loginDTO.getEmail());
         account.setPasswordHash(passwordEncoder.encode(loginDTO.getPassword()));
         account.setStatus(Account.Status.ACTIVATE);

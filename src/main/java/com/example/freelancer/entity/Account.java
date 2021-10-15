@@ -23,6 +23,8 @@ public class Account {
     private String email;
     @NotNull
     private String passwordHash;
+    @NotNull
+    private Double amount;
     private Status status;
     private Role role;
     private Date createdAt;

@@ -14,6 +14,7 @@ public class AccountDTO {
     private int id;
     private String username;
     private String email;
+    private Double amount;
     private Date createdAt;
     private  Date updatedAt;
     private Account.Role role;
@@ -24,6 +25,7 @@ public class AccountDTO {
         this.createdAt = account.getCreatedAt();
         this.updatedAt = account.getUpdatedAt();
         this.role = account.getRole();
+        this.amount = account.getAmount();
         this.status = account.getStatus();
         this.email = account.getEmail();
     }
