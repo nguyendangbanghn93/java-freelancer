@@ -51,12 +51,15 @@ public class Account {
         FREELANCER
     }
 
-    public Account(@NotNull String username, @NotNull String email, @NotNull String passwordHash, Status status, Role role) {
+    public Account(@NotNull String username, @NotNull String email, @NotNull String passwordHash, Status status, Role role, Double amount, Date createdAt, Date updatedAt) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
         this.status = status;
         this.role = role;
+        this.amount = amount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
 

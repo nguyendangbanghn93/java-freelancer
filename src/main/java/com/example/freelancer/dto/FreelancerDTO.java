@@ -1,6 +1,5 @@
 package com.example.freelancer.dto;
 
-import com.example.freelancer.entity.Account;
 import com.example.freelancer.entity.Freelancer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +38,5 @@ public class FreelancerDTO {
         this.language = freelancer.getName();
         this.rate = freelancer.getRate();
         this.status = freelancer.getStatus();
-        this.account = new AccountDTO(freelancer.getAccount());
-        this.thumbnail = freelancer.getThumbnail();
     }
 }

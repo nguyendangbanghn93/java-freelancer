@@ -39,21 +39,13 @@ public class FreelancerService {
         return freelancerRepository.save(freelancer);
     }
 
-    public Freelancer create(Freelancer freelancer) {
+    public Freelancer create(Freelancer freelancer, Account account) {
+        freelancer.setAccount(account);
         return freelancerRepository.save(freelancer);
     }
 
-    public Page<Freelancer> getListFreelancer(@Nullable Integer currentPage, @Nullable Integer pageSize) {
-        if (currentPage == null) {
-            currentPage = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 10;
-        }
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
-        Page<Freelancer> pageResult = freelancerRepository.findAll(pageable);
-
-        return pageResult;
+    public List<Freelancer> getListFreelancer() {
+        return freelancerRepository.findAll();
     }
 
     public Freelancer findById(@Nullable Integer id) {

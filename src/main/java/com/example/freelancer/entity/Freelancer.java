@@ -1,5 +1,6 @@
 package com.example.freelancer.entity;
 
+import com.example.freelancer.dto.AccountDTO;
 import com.example.freelancer.dto.FreelancerDTO;
 import lombok.*;
 
@@ -70,10 +71,11 @@ public class Freelancer {
         freelancerDTO.setRate(this.rate);
         freelancerDTO.setStatus(this.status);
         freelancerDTO.setThumbnail(this.thumbnail);
+        freelancerDTO.setAccount(new AccountDTO(this.account));
         return freelancerDTO;
     }
 
-    public Freelancer(String name, String address, Gender gender, String phone, String experience, String description, String title, double averageIncome, String language, double rate, String thumbnail, Status status, int accountId) {
+    public Freelancer(String name, String address, Gender gender, String phone, String experience, String description, String title, double averageIncome, String language, double rate, String thumbnail, Status status, Account account) {
         this.name = name;
         this.address = address;
         this.gender = gender;
@@ -86,6 +88,6 @@ public class Freelancer {
         this.rate = rate;
         this.thumbnail = thumbnail;
         this.status = status;
-        this.accountId = accountId;
+        this.account = account;
     }
 }

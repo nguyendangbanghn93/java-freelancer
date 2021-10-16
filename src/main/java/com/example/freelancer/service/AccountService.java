@@ -54,6 +54,8 @@ public class AccountService {
     }
 
     public Account createAcount2(Account account) {
+        account.setCreatedAt(new Date());
+        account.setUpdatedAt(new Date());
         return accountRepository.save(account);
     }
 

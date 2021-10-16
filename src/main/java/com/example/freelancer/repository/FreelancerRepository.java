@@ -6,6 +6,4 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FreelancerRepository extends JpaRepository<Freelancer,Integer> {
-    @Override
-    Page<Freelancer> findAll(Pageable pageable);
 }
