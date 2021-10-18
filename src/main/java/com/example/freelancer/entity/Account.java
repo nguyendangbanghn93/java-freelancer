@@ -4,6 +4,7 @@ import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,18 +13,19 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotNull
+    @NotEmpty(message = "username notnull")
+    @Column(unique = true)
     private String username;
-    @NotNull
+    @NotEmpty(message = "Email notnull")
+    @Column(unique = true, nullable = false)
     private String email;
-    @NotNull
+    //    @NotNull
     private String passwordHash;
-    @NotNull
+    //    @NotNull
     private Double amount;
     private Status status;
     private Role role;
@@ -32,7 +34,6 @@ public class Account {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private Set<Credential> credentials;
-
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Freelancer freelancer;
 
@@ -60,6 +61,24 @@ public class Account {
         this.amount = amount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", amount=" + amount +
+                ", status=" + status +
+                ", role=" + role +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", credentials=" + credentials +
+                ", freelancer=" + freelancer +
+                ", jobSet=" + jobSet +
+                '}';
     }
 }
 

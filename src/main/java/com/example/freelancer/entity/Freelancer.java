@@ -12,7 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Freelancer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,7 @@ public class Freelancer {
         this.account = account;
     }
 
-    @Column(insertable = false, updatable = false)
+    @Column(unique = true, insertable = false, updatable = false)
     private int accountId;
 
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -89,5 +88,27 @@ public class Freelancer {
         this.thumbnail = thumbnail;
         this.status = status;
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "Freelancer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", gender=" + gender +
+                ", phone='" + phone + '\'' +
+                ", experience='" + experience + '\'' +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", averageIncome=" + averageIncome +
+                ", language='" + language + '\'' +
+                ", rate=" + rate +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", status=" + status +
+                ", account=" + account +
+                ", accountId=" + accountId +
+                ", job=" + job +
+                '}';
     }
 }
