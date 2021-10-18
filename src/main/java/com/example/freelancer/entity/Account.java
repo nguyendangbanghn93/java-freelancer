@@ -63,23 +63,23 @@ public class Account {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
-                ", amount=" + amount +
-                ", status=" + status +
-                ", role=" + role +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", credentials=" + credentials +
-                ", freelancer=" + freelancer +
-                ", jobSet=" + jobSet +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Account{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", email='" + email + '\'' +
+//                ", passwordHash='" + passwordHash + '\'' +
+//                ", amount=" + amount +
+//                ", status=" + status +
+//                ", role=" + role +
+//                ", createdAt=" + createdAt +
+//                ", updatedAt=" + updatedAt +
+//                ", credentials=" + credentials +
+//                ", freelancer=" + freelancer +
+//                ", jobSet=" + jobSet +
+//                '}';
+//    }
 }
 
 

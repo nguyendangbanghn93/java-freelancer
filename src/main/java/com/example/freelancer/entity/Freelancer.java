@@ -90,25 +90,25 @@ public class Freelancer {
         this.account = account;
     }
 
-    @Override
-    public String toString() {
-        return "Freelancer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", gender=" + gender +
-                ", phone='" + phone + '\'' +
-                ", experience='" + experience + '\'' +
-                ", description='" + description + '\'' +
-                ", title='" + title + '\'' +
-                ", averageIncome=" + averageIncome +
-                ", language='" + language + '\'' +
-                ", rate=" + rate +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", status=" + status +
-                ", account=" + account +
-                ", accountId=" + accountId +
-                ", job=" + job +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Freelancer{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", address='" + address + '\'' +
+//                ", gender=" + gender +
+//                ", phone='" + phone + '\'' +
+//                ", experience='" + experience + '\'' +
+//                ", description='" + description + '\'' +
+//                ", title='" + title + '\'' +
+//                ", averageIncome=" + averageIncome +
+//                ", language='" + language + '\'' +
+//                ", rate=" + rate +
+//                ", thumbnail='" + thumbnail + '\'' +
+//                ", status=" + status +
+//                ", account=" + account +
+//                ", accountId=" + accountId +
+//                ", job=" + job +
+//                '}';
+//    }
 }
