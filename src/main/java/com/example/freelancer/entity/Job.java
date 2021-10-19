@@ -1,5 +1,6 @@
 package com.example.freelancer.entity;
 
+import com.example.freelancer.dto.JobDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,4 +45,7 @@ public class Job {
     private Freelancer freelancer;
     @Column(insertable = false, updatable = false)
     private int freelancerId;
+    public JobDTO toJobDTO(){
+        return new JobDTO(id,salary,subject,description,type,status,response_date,invited_user_id,accountId,freelancerId);
+    }
 }
