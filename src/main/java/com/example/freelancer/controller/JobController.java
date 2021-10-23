@@ -23,6 +23,29 @@ public class JobController {
     public JobDTO getDetailJob(
             @PathVariable(value = "id") @Nullable Integer id
     ) {
+        System.out.println(id);
         return jobService.getDetailJob(id).toJobDTO();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseAPI createJob(
+            @RequestBody JobDTO jobDTO
+    ) {
+        Boolean result = jobService.createJob(jobDTO);
+        if (result) {
+            return new ResponseAPI(APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+        }
+        return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    public ResponseAPI updateJob(
+            @RequestBody JobDTO jobDTO
+    ) {
+        Boolean result = jobService.updateJob(jobDTO);
+        if (result) {
+            return new ResponseAPI(APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+        }
+        return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
     }
 }

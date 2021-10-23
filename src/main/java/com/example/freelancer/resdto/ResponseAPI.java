@@ -13,4 +13,9 @@ public class ResponseAPI<T> {
     private T data;
     private String message;
     private int code;
+
+    public ResponseAPI(String message, int code) {
+        this.message = message;
+        this.code = code;
+    }
 }

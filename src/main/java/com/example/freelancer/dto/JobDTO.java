@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public class JobDTO {
     private int id;
@@ -21,18 +21,20 @@ public class JobDTO {
     private String description;
     private int type;
     private int status;
+    private String result;
     private Date response_date;
     private String invited_user_id;
     private int accountId;
     private int freelancerId;
 
-    public JobDTO(int id, double salary, String subject, String description, int type, int status, Date response_date, String invited_user_id, int accountId, int freelancerId) {
+    public JobDTO(int id, double salary, String subject, String description, int type, int status, String result, Date response_date, String invited_user_id, int accountId, int freelancerId) {
         this.id = id;
         this.salary = salary;
         this.subject = subject;
         this.description = description;
         this.type = type;
         this.status = status;
+        this.result = result;
         this.response_date = response_date;
         this.invited_user_id = invited_user_id;
         this.accountId = accountId;
