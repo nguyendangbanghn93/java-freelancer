@@ -94,6 +94,14 @@ public class AccountService {
 
     }
 
+    public Account findById(Integer id) {
+        Optional<Account> opt = accountRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
     public long count() {
         return accountRepository.count();
     }
