@@ -3,6 +3,7 @@ package com.example.freelancer.controller;
 import com.example.freelancer.dto.FreelancerDTO;
 import com.example.freelancer.dto.JobDTO;
 import com.example.freelancer.entity.Freelancer;
+import com.example.freelancer.entity.Job;
 import com.example.freelancer.repository.JobRepository;
 import com.example.freelancer.resdto.ResponseAPI;
 import com.example.freelancer.service.JobService;
@@ -28,23 +29,23 @@ public class JobController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseAPI createJob(
+    public ResponseAPI<JobDTO> createJob(
             @RequestBody JobDTO jobDTO
     ) {
-        Boolean result = jobService.createJob(jobDTO);
-        if (result) {
-            return new ResponseAPI(APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+        Job job = jobService.createJob(jobDTO);
+        if (job != null) {
+            return new ResponseAPI(job.toJobDTO(), APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
         }
         return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
-    public ResponseAPI updateJob(
+    public ResponseAPI<JobDTO> updateJob(
             @RequestBody JobDTO jobDTO
     ) {
-        Boolean result = jobService.updateJob(jobDTO);
-        if (result) {
-            return new ResponseAPI(APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+        Job job = jobService.updateJob(jobDTO);
+        if (job != null) {
+            return new ResponseAPI(job.toJobDTO(), APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
         }
         return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
     }

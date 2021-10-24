@@ -28,7 +28,7 @@ public class JobService {
         return jobRepository.findById(id).get();
     }
 
-    public Boolean createJob(JobDTO jobDTO) {
+    public Job createJob(JobDTO jobDTO) {
         try {
             Job job = new Job();
             job.setSalary(jobDTO.getSalary());
@@ -43,14 +43,14 @@ public class JobService {
             job.setFreelancerId(jobDTO.getFreelancerId());
             job.setFreelancer(freelancerRepository.findById(jobDTO.getFreelancerId()).get());
             jobRepository.save(job);
-            return true;
+            return job;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
-    public Boolean updateJob(JobDTO jobDTO) {
+    public Job updateJob(JobDTO jobDTO) {
         Optional opt = jobRepository.findById(jobDTO.getId());
         if (opt.isPresent()) {
             Job job1 = (Job) opt.get();
@@ -68,8 +68,8 @@ public class JobService {
             job1.setFreelancerId(jobDTO.getFreelancerId());
             job1.setFreelancer(freelancerRepository.findById(jobDTO.getFreelancerId()).get());
             jobRepository.save(job1);
-            return true;
+            return job1;
         }
-        return false;
+        return null;
     }
 }
