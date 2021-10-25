@@ -27,6 +27,10 @@ public class Job {
     private String result;
     private Date response_date;
     private String invited_user_id;
+    private Date created_at;
+    private Date updated_at;
+    private double rate;
+    private String comment;
 
     @OneToOne(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Chat chat;

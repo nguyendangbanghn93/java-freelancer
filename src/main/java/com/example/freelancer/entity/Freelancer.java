@@ -5,6 +5,7 @@ import com.example.freelancer.dto.FreelancerDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,8 @@ public class Freelancer {
     private double rate;
     private String thumbnail;
     private Status status;
+    private Date created_at;
+    private Date updated_at;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
