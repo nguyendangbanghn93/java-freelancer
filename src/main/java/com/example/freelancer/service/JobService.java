@@ -42,6 +42,10 @@ public class JobService {
             job.setAccount(accountRepository.findById(jobDTO.getAccountId()).get());
             job.setFreelancerId(jobDTO.getFreelancerId());
             job.setFreelancer(freelancerRepository.findById(jobDTO.getFreelancerId()).get());
+            job.setCreated_at(new Date());
+            job.setUpdated_at(new Date());
+            job.setRate(jobDTO.getRate());
+            job.setComment(jobDTO.getComment());
             jobRepository.save(job);
             return job;
         } catch (Exception e) {
@@ -67,6 +71,9 @@ public class JobService {
             job1.setAccount(accountRepository.findById(jobDTO.getAccountId()).get());
             job1.setFreelancerId(jobDTO.getFreelancerId());
             job1.setFreelancer(freelancerRepository.findById(jobDTO.getFreelancerId()).get());
+            job1.setUpdated_at(new Date());
+            job1.setRate(jobDTO.getRate());
+            job1.setComment(jobDTO.getComment());
             jobRepository.save(job1);
             return job1;
         }

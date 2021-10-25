@@ -51,7 +51,6 @@ public class Job {
     @Column(insertable = false, updatable = false)
     private int freelancerId;
     public JobDTO toJobDTO(){
-
-        return new JobDTO(id,salary,subject,description,type,status,result,response_date,invited_user_id,accountId,freelancerId);
+        return new JobDTO(id,salary,subject,description,type,status,result,response_date,invited_user_id,accountId,freelancerId, created_at, updated_at, rate, comment);
     }
 }
