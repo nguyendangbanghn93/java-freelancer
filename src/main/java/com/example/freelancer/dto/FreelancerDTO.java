@@ -25,6 +25,9 @@ public class FreelancerDTO {
     private Freelancer.Status status;
     private String thumbnail;
     private AccountDTO account;
+    private int totalJobDone;
+    private double totalEarning;
+
     public FreelancerDTO(Freelancer freelancer){
         this.id = freelancer.getId();
         this.name = freelancer.getName();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,5 +79,18 @@ public class JobService {
             return job1;
         }
         return null;
+    }
+
+    public int getTotalJobDone(int freelancerId) {
+        return jobRepository.getTotalJobDone(freelancerId).size();
+    }
+
+    public double getTotalEarning(int freelancerId) {
+        List<Job> lst = jobRepository.getTotalJobDone(freelancerId);
+        Double sum = (double)0;
+        for (int i = 0; i < lst.size(); i++) {
+            sum += lst.get(i).getSalary();
+        }
+        return sum;
     }
 }
