@@ -10,4 +10,10 @@ import java.util.List;
 public interface JobRepository extends JpaRepository<Job,Integer> {
     @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId AND j.status = 4")
     List<Job> getTotalJobDone(@Param(value="freelancerId") Integer freelancerId);
+
+    @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId")
+    List<Job> getListJobByFreelancerId(Integer freelancerId);
+
+    @Query("SELECT j FROM Job j WHERE j.accountId = :accountId")
+    List<Job> getListJobByAccountId(Integer accountId);
 }

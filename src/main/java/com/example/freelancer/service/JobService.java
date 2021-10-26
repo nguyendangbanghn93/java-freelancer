@@ -1,6 +1,7 @@
 package com.example.freelancer.service;
 
 import com.example.freelancer.dto.JobDTO;
+import com.example.freelancer.entity.Freelancer;
 import com.example.freelancer.entity.Job;
 import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.FreelancerRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -92,5 +94,21 @@ public class JobService {
             sum += lst.get(i).getSalary();
         }
         return sum;
+    }
+
+    public List<Job> getListJob() {
+        return jobRepository.findAll();
+    }
+
+    public List<Job> getListJobByFreelancerId(int freelancerId) {
+        List<Job> list = jobRepository.getListJobByFreelancerId(freelancerId);
+
+        return list;
+    }
+
+    public List<Job> getListJobByAccountId(Integer accountId) {
+        List<Job> list = jobRepository.getListJobByAccountId(accountId);
+
+        return list;
     }
 }
