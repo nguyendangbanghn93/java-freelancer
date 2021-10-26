@@ -1,16 +1,18 @@
 package com.example.freelancer.service;
 
 import com.example.freelancer.dto.JobDTO;
-import com.example.freelancer.entity.Freelancer;
+import com.example.freelancer.dto.TransactionHistoryDTO;
 import com.example.freelancer.entity.Job;
+import com.example.freelancer.entity.SystemConfig;
+import com.example.freelancer.entity.TransactionHistory;
 import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.FreelancerRepository;
 import com.example.freelancer.repository.JobRepository;
+import com.example.freelancer.repository.SystemConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +29,13 @@ public class JobService {
     @Autowired
     FreelancerRepository freelancerRepository;
 
-    public Job getDetailJob(Integer id){
+    @Autowired
+    SystemConfigRepository systemConfigRepository;
+
+    @Autowired
+    TransactionService transactionService;
+
+    public Job getDetailJob(Integer id) {
         return jobRepository.findById(id).get();
     }
 
@@ -77,6 +85,35 @@ public class JobService {
             job1.setUpdated_at(new Date());
             job1.setRate(jobDTO.getRate());
             job1.setComment(jobDTO.getComment());
+
+            if (job1.getStatus() == 2 || job1.getStatus() == 5) {
+                Optional<SystemConfig> optionalSystemConfig = systemConfigRepository.findById(1);
+                SystemConfig systemConfig = new SystemConfig();
+                TransactionHistoryDTO transactionHistoryDTO = new TransactionHistoryDTO();
+
+                systemConfig.setAmount(0);
+                if (optionalSystemConfig.isPresent()) {
+                    systemConfig = optionalSystemConfig.get();
+                }
+                double systemConfigAmount = systemConfig.getAmount();
+
+                if (job1.getStatus() == 2) {
+                    systemConfig.setAmount(systemConfigAmount + job1.getSalary());
+                    transactionHistoryDTO.setType(2); // charge
+                } else {
+                    if (systemConfigAmount - job1.getSalary() < 0) {
+                        return null;
+                    }
+                    systemConfig.setAmount(systemConfigAmount - job1.getSalary());
+                    transactionHistoryDTO.setType(1); // withdraw
+                }
+                transactionHistoryDTO.setAmount(job1.getSalary());
+                transactionHistoryDTO.setAccountId(job1.getAccountId());
+                transactionHistoryDTO.setAccount(job1.getAccount());
+
+                transactionService.createTransactionHistory(transactionHistoryDTO);
+                systemConfigRepository.save(systemConfig);
+            }
             jobRepository.save(job1);
             return job1;
         }
@@ -89,7 +126,7 @@ public class JobService {
 
     public double getTotalEarning(int freelancerId) {
         List<Job> lst = jobRepository.getTotalJobDone(freelancerId);
-        Double sum = (double)0;
+        Double sum = (double) 0;
         for (int i = 0; i < lst.size(); i++) {
             sum += lst.get(i).getSalary();
         }
