@@ -4,7 +4,6 @@ import com.example.freelancer.dto.JobDTO;
 import com.example.freelancer.dto.TransactionHistoryDTO;
 import com.example.freelancer.entity.Job;
 import com.example.freelancer.entity.SystemConfig;
-import com.example.freelancer.entity.TransactionHistory;
 import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.FreelancerRepository;
 import com.example.freelancer.repository.JobRepository;
