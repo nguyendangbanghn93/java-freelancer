@@ -27,7 +27,7 @@ public class JobController {
         return jobService.getDetailJob(id).toJobDTO();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/api/job")
     public ResponseAPI<JobDTO> createJob(
             @RequestBody JobDTO jobDTO
     ) {
