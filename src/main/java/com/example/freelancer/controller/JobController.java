@@ -54,13 +54,15 @@ public class JobController {
             @RequestParam @Nullable Integer freelancerId,
             @RequestParam @Nullable Integer accountId
     ) {
-        List<JobDTO> list;
+        List<JobDTO> list = jobService.getListJob().stream().map(x -> x.toJobDTO()).collect(Collectors.toList());
         if (freelancerId != null) {
             list = jobService.getListJobByFreelancerId(freelancerId).stream().map(x -> x.toJobDTO()).collect(Collectors.toList());
-        } else if (accountId != null) {
+        }
+        if (accountId != null) {
             list = jobService.getListJobByAccountId(accountId).stream().map(x -> x.toJobDTO()).collect(Collectors.toList());
-        } else {
-            list = jobService.getListJob().stream().map(x -> x.toJobDTO()).collect(Collectors.toList());
+        }
+        if (freelancerId != null && accountId != null) {
+            list = jobService.getListJobByAccountIdAndFreelancerId(accountId, freelancerId).stream().map(x -> x.toJobDTO()).collect(Collectors.toList());
         }
 
         return new ResponseAPI<List<JobDTO>>(list, APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);

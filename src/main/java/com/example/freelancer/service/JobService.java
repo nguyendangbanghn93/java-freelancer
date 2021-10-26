@@ -101,14 +101,14 @@ public class JobService {
     }
 
     public List<Job> getListJobByFreelancerId(int freelancerId) {
-        List<Job> list = jobRepository.getListJobByFreelancerId(freelancerId);
-
-        return list;
+        return jobRepository.getListJobByFreelancerId(freelancerId);
     }
 
     public List<Job> getListJobByAccountId(Integer accountId) {
-        List<Job> list = jobRepository.getListJobByAccountId(accountId);
+        return jobRepository.getListJobByAccountId(accountId);
+    }
 
-        return list;
+    public List<Job> getListJobByAccountIdAndFreelancerId(Integer accountId, Integer freelancerId) {
+        return jobRepository.getListJobByAccountIdAndFreelancerId(accountId, freelancerId);
     }
 }
