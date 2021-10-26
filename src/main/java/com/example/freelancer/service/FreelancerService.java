@@ -62,13 +62,12 @@ public class FreelancerService {
         if (id == null) {
             return null;
         }
-        if (freelancerRepository.existsById(id)) {
-            Optional<Freelancer> optional = freelancerRepository.findByAccountId(id);
 
-            if (optional.isPresent()) {
-                return optional.get();
-            }
+        Optional<Freelancer> optional = freelancerRepository.findByAccountId(id);
+        if (optional.isPresent()) {
+            return optional.get();
         }
+
         return null;
     }
 }
