@@ -19,6 +19,8 @@ public class AccountDTO {
     private  Date updatedAt;
     private Account.Role role;
     private Account.Status status;
+    private FreelancerDTO freelancerDTO;
+
     public AccountDTO(Account account) {
         this.id = account.getId();
         this.username = account.getUsername();

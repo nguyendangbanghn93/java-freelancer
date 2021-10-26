@@ -22,6 +22,7 @@ public class Freelancer {
     private Gender gender;
     private String phone;
     private String experience;
+    @Column(columnDefinition="TEXT")
     private String description;
     private String title;
     private double averageIncome;
@@ -74,6 +75,24 @@ public class Freelancer {
         freelancerDTO.setStatus(this.status);
         freelancerDTO.setThumbnail(this.thumbnail);
         freelancerDTO.setAccount(new AccountDTO(this.account));
+        return freelancerDTO;
+    }
+
+    public FreelancerDTO toFreelancerDTO2() {
+        FreelancerDTO freelancerDTO = new FreelancerDTO();
+        freelancerDTO.setId(this.id);
+        freelancerDTO.setName(this.name);
+        freelancerDTO.setAddress(this.address);
+        freelancerDTO.setGender(this.gender);
+        freelancerDTO.setPhone(this.phone);
+        freelancerDTO.setExperience(this.experience);
+        freelancerDTO.setDescription(this.description);
+        freelancerDTO.setTitle(this.title);
+        freelancerDTO.setAverageIncome(this.averageIncome);
+        freelancerDTO.setLanguage(this.language);
+        freelancerDTO.setRate(this.rate);
+        freelancerDTO.setStatus(this.status);
+        freelancerDTO.setThumbnail(this.thumbnail);
         return freelancerDTO;
     }
 

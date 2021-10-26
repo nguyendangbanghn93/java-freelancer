@@ -57,4 +57,18 @@ public class FreelancerService {
         }
         return null;
     }
+
+    public Freelancer findByAccountId(@Nullable Integer id) {
+        if (id == null) {
+            return null;
+        }
+        if (freelancerRepository.existsById(id)) {
+            Optional<Freelancer> optional = freelancerRepository.findByAccountId(id);
+
+            if (optional.isPresent()) {
+                return optional.get();
+            }
+        }
+        return null;
+    }
 }

@@ -21,6 +21,7 @@ public class Job {
     private int id;
     private double salary;
     private String subject;
+    @Column(columnDefinition="TEXT")
     private String description;
     private int type;
     private int status;
