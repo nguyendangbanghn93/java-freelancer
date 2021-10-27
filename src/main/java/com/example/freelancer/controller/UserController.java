@@ -1,10 +1,12 @@
 package com.example.freelancer.controller;
 
 import com.example.freelancer.dto.AccountDTO;
+import com.example.freelancer.dto.FreelancerDTO;
 import com.example.freelancer.entity.Account;
 import com.example.freelancer.entity.Freelancer;
 import com.example.freelancer.service.AccountService;
 import com.example.freelancer.service.FreelancerService;
+import com.example.freelancer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,9 @@ public class UserController {
     @Autowired
     private FreelancerService freelancerService;
 
+    @Autowired
+    private JobService jobService;
+
     @RequestMapping(value = "/information", method = RequestMethod.GET)
     public AccountDTO getInformation(@RequestHeader("Authorization") String token) {
         Account account = accountService.findByToken(token.replace("Bearer", "").trim());
@@ -28,7 +33,10 @@ public class UserController {
 
         Freelancer freelancer = freelancerService.findByAccountId(account.getId());
         if (freelancer != null) {
-            accountDTO.setFreelancerDTO(freelancer.toFreelancerDTO2());
+            FreelancerDTO freelancerDTO = freelancer.toFreelancerDTO2();
+            freelancerDTO.setTotalJobDone(jobService.getTotalJobDone(freelancer.getId()));
+            freelancerDTO.setTotalEarning(jobService.getTotalEarning(freelancer.getId()));
+            accountDTO.setFreelancerDTO(freelancerDTO);
         }
 
         return accountDTO;
