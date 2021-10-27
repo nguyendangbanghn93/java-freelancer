@@ -5,10 +5,13 @@ import com.example.freelancer.entity.TransactionHistory;
 import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.SystemConfigRepository;
 import com.example.freelancer.repository.TransactionHistoryRepository;
+import com.example.freelancer.resdto.TransactionHistoryRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -22,19 +25,29 @@ public class TransactionService {
     @Autowired
     AccountRepository accountRepository;
 
-    public void makeTransaction(){
+    public TransactionHistoryRes allTranscationHistory(){
+        try {
+            TransactionHistoryRes transactionHistoryRes = new TransactionHistoryRes();
+            transactionHistoryRes.setList(transactionHistoryRepository.findAll().stream().map(x -> x.toTransactionHistoryDTO()).collect(Collectors.toList()));
+            transactionHistoryRes.setTotalSum(transactionHistoryRepository.getSumTransaction());
 
+            return transactionHistoryRes;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
-    public TransactionHistory createTransactionHistory(TransactionHistoryDTO transactionHistoryDTO) {
+
+    public TransactionHistory createTransactionHistory(TransactionHistory transactionHistoryItem) {
         try {
             TransactionHistory transactionHistory = new TransactionHistory();
-            transactionHistory.setAmount(transactionHistoryDTO.getAmount());
-            transactionHistory.setAccountId(transactionHistoryDTO.getAccountId());
-            transactionHistory.setAccount(accountRepository.findById(transactionHistoryDTO.getAccountId()).get());
+            transactionHistory.setAmount(transactionHistoryItem.getAmount());
+            transactionHistory.setAccountId(transactionHistoryItem.getAccountId());
+            transactionHistory.setAccount(accountRepository.findById(transactionHistoryItem.getAccountId()).get());
             transactionHistory.setCreatedAt(new Date());
             transactionHistory.setUpdatedAt(new Date());
-            transactionHistory.setType(transactionHistoryDTO.getType());
+            transactionHistory.setType(transactionHistoryItem.getType());
             transactionHistoryRepository.save(transactionHistory);
 
             return transactionHistory;

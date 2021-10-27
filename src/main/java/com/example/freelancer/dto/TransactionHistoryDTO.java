@@ -16,7 +16,7 @@ import java.util.Date;
 public class TransactionHistoryDTO {
     private int id;
     private double amount;
-    private Account account;
+    private AccountDTO account;
     private int accountId;
     private Date createdAt;
     private Date updatedAt;
@@ -25,7 +25,7 @@ public class TransactionHistoryDTO {
     public TransactionHistoryDTO(TransactionHistory transactionHistory) {
         this.id = transactionHistory.getId();
         this.amount = transactionHistory.getAmount();
-        this.account = transactionHistory.getAccount();
+        this.account = new AccountDTO(transactionHistory.getAccount());
         this.accountId = transactionHistory.getAccountId();
         this.createdAt = transactionHistory.getCreatedAt();
         this.updatedAt = transactionHistory.getUpdatedAt();
