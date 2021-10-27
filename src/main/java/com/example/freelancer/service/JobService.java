@@ -2,6 +2,8 @@ package com.example.freelancer.service;
 
 import com.example.freelancer.dto.JobDTO;
 import com.example.freelancer.dto.TransactionHistoryDTO;
+import com.example.freelancer.entity.Account;
+import com.example.freelancer.entity.Freelancer;
 import com.example.freelancer.entity.Job;
 import com.example.freelancer.entity.SystemConfig;
 import com.example.freelancer.repository.AccountRepository;
@@ -68,6 +70,7 @@ public class JobService {
         Optional opt = jobRepository.findById(jobDTO.getId());
         if (opt.isPresent()) {
             Job job1 = (Job) opt.get();
+            Freelancer freelancer = freelancerRepository.findById(jobDTO.getFreelancerId()).get();
             job1.setSalary(jobDTO.getSalary());
             job1.setSubject(jobDTO.getSubject());
             job1.setSubject(jobDTO.getSubject());
@@ -80,13 +83,13 @@ public class JobService {
             job1.setAccountId(jobDTO.getAccountId());
             job1.setAccount(accountRepository.findById(jobDTO.getAccountId()).get());
             job1.setFreelancerId(jobDTO.getFreelancerId());
-            job1.setFreelancer(freelancerRepository.findById(jobDTO.getFreelancerId()).get());
+            job1.setFreelancer(freelancer);
             job1.setUpdated_at(new Date());
             job1.setRate(jobDTO.getRate());
             job1.setComment(jobDTO.getComment());
 
             if (job1.getStatus() == 2 || job1.getStatus() == 5) {
-                Optional<SystemConfig> optionalSystemConfig = systemConfigRepository.findById(1);
+                Optional<SystemConfig> optionalSystemConfig = systemConfigRepository.findTopByOrderById();
                 SystemConfig systemConfig = new SystemConfig();
                 TransactionHistoryDTO transactionHistoryDTO = new TransactionHistoryDTO();
 
@@ -95,21 +98,32 @@ public class JobService {
                     systemConfig = optionalSystemConfig.get();
                 }
                 double systemConfigAmount = systemConfig.getAmount();
-
+                Account freelancerAccount = freelancer.getAccount();
                 if (job1.getStatus() == 2) {
-                    systemConfig.setAmount(systemConfigAmount + job1.getSalary());
-                    transactionHistoryDTO.setType(2); // charge
-                } else {
-                    if (systemConfigAmount - job1.getSalary() < 0) {
+                    Account account = accountRepository.getById(job1.getAccountId());
+                    // Khi freelancer nhận job , thu tiền user tạo job
+                    if (account.getAmount() - job1.getSalary() < 0) {
                         return null;
                     }
-                    systemConfig.setAmount(systemConfigAmount - job1.getSalary());
+                    account.setAmount(account.getAmount() - job1.getSalary());
+                    systemConfig.setAmount(systemConfigAmount + job1.getSalary());
+                    transactionHistoryDTO.setAmount(job1.getSalary());
+                    transactionHistoryDTO.setType(2);
+                    transactionHistoryDTO.setAccountId(job1.getAccountId());
+                    transactionHistoryDTO.setAccount(job1.getAccount());
+                } else {
+                    double additionalFee = job1.getSalary() / 10;
+                    // Freelancer done job , trả tiền cho freelancer trừ phí giao dijch
+                    if (systemConfigAmount - (job1.getSalary() - additionalFee) < 0) {
+                        return null;
+                    }
+                    freelancerAccount.setAmount(freelancerAccount.getAmount() + (job1.getSalary() - additionalFee));
+                    systemConfig.setAmount(systemConfigAmount - (job1.getSalary() - additionalFee));
+                    transactionHistoryDTO.setAmount(-(job1.getSalary() - additionalFee));
                     transactionHistoryDTO.setType(1); // withdraw
+                    transactionHistoryDTO.setAccountId(freelancerAccount.getId());
+                    transactionHistoryDTO.setAccount(freelancerAccount);
                 }
-                transactionHistoryDTO.setAmount(job1.getSalary());
-                transactionHistoryDTO.setAccountId(job1.getAccountId());
-                transactionHistoryDTO.setAccount(job1.getAccount());
-
                 transactionService.createTransactionHistory(transactionHistoryDTO);
                 systemConfigRepository.save(systemConfig);
             }
