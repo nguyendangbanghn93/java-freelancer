@@ -1,5 +1,6 @@
 package com.example.freelancer.entity;
 
+import com.example.freelancer.dto.AccountDTO;
 import com.example.freelancer.dto.TransactionHistoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,6 @@ public class TransactionHistory {
     private Date updatedAt;
 
     public TransactionHistoryDTO toTransactionHistoryDTO() {
-        return new TransactionHistoryDTO(id, amount, account, accountId, createdAt, updatedAt, type);
+        return new TransactionHistoryDTO(id, amount, new AccountDTO(account), accountId, createdAt, updatedAt, type);
     }
 }

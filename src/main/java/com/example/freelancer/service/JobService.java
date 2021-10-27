@@ -2,10 +2,7 @@ package com.example.freelancer.service;
 
 import com.example.freelancer.dto.JobDTO;
 import com.example.freelancer.dto.TransactionHistoryDTO;
-import com.example.freelancer.entity.Account;
-import com.example.freelancer.entity.Freelancer;
-import com.example.freelancer.entity.Job;
-import com.example.freelancer.entity.SystemConfig;
+import com.example.freelancer.entity.*;
 import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.FreelancerRepository;
 import com.example.freelancer.repository.JobRepository;
@@ -91,7 +88,7 @@ public class JobService {
             if (job1.getStatus() == 2 || job1.getStatus() == 5) {
                 Optional<SystemConfig> optionalSystemConfig = systemConfigRepository.findTopByOrderById();
                 SystemConfig systemConfig = new SystemConfig();
-                TransactionHistoryDTO transactionHistoryDTO = new TransactionHistoryDTO();
+                TransactionHistory transactionHistory = new TransactionHistory();
 
                 systemConfig.setAmount(0);
                 if (optionalSystemConfig.isPresent()) {
@@ -107,10 +104,10 @@ public class JobService {
                     }
                     account.setAmount(account.getAmount() - job1.getSalary());
                     systemConfig.setAmount(systemConfigAmount + job1.getSalary());
-                    transactionHistoryDTO.setAmount(job1.getSalary());
-                    transactionHistoryDTO.setType(2);
-                    transactionHistoryDTO.setAccountId(job1.getAccountId());
-                    transactionHistoryDTO.setAccount(job1.getAccount());
+                    transactionHistory.setAmount(job1.getSalary());
+                    transactionHistory.setType(2);
+                    transactionHistory.setAccountId(job1.getAccountId());
+                    transactionHistory.setAccount(job1.getAccount());
                 } else {
                     double additionalFee = job1.getSalary() / 10;
                     // Freelancer done job , trả tiền cho freelancer trừ phí giao dijch
@@ -119,12 +116,12 @@ public class JobService {
                     }
                     freelancerAccount.setAmount(freelancerAccount.getAmount() + (job1.getSalary() - additionalFee));
                     systemConfig.setAmount(systemConfigAmount - (job1.getSalary() - additionalFee));
-                    transactionHistoryDTO.setAmount(-(job1.getSalary() - additionalFee));
-                    transactionHistoryDTO.setType(1); // withdraw
-                    transactionHistoryDTO.setAccountId(freelancerAccount.getId());
-                    transactionHistoryDTO.setAccount(freelancerAccount);
+                    transactionHistory.setAmount(-(job1.getSalary() - additionalFee));
+                    transactionHistory.setType(1); // withdraw
+                    transactionHistory.setAccountId(freelancerAccount.getId());
+                    transactionHistory.setAccount(freelancerAccount);
                 }
-                transactionService.createTransactionHistory(transactionHistoryDTO);
+                transactionService.createTransactionHistory(transactionHistory);
                 systemConfigRepository.save(systemConfig);
             }
             jobRepository.save(job1);
