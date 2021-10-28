@@ -13,6 +13,7 @@ import java.util.Date;
 public class AccountDTO {
     private int id;
     private String username;
+    private String password;
     private String email;
     private Double amount;
     private Date createdAt;

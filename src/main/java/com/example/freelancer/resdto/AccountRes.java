@@ -1,6 +1,6 @@
 package com.example.freelancer.resdto;
 
-import com.example.freelancer.dto.TransactionHistoryDTO;
+import com.example.freelancer.dto.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionHistoryRes {
-    private List<TransactionHistoryDTO> list;
-    private double totalSum;
+public class AccountRes {
+    private List<AccountDTO> list;
+    private int totalPage;
 }

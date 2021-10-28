@@ -9,6 +9,10 @@ import com.example.freelancer.repository.JobRepository;
 import com.example.freelancer.repository.SystemConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -157,5 +161,33 @@ public class JobService {
 
     public List<Job> getListJobByAccountIdAndFreelancerId(Integer accountId, Integer freelancerId) {
         return jobRepository.getListJobByAccountIdAndFreelancerId(accountId, freelancerId);
+    }
+
+    // admin
+    public Page<Job> getListJobPagination(
+            @Nullable Integer currentPage,
+            @Nullable Integer pageSize
+    ) {
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+
+        Page<Job> result = jobRepository.findAll(pageable);
+        return result;
+    }
+
+    public boolean deleteJob(int jobId) {
+        Optional<Job> opt = jobRepository.findById(jobId);
+        if (opt.isPresent()) {
+            Job job = opt.get();
+            job.setStatus(-1);
+            jobRepository.save(job);
+            return true;
+        }
+        return false;
     }
 }

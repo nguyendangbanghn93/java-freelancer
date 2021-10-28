@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionHistoryRes {
+public class TransactionRes {
     private List<TransactionHistoryDTO> list;
-    private double totalSum;
+    private int totalPage;
 }

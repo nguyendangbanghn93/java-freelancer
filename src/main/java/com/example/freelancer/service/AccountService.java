@@ -1,5 +1,6 @@
 package com.example.freelancer.service;
 
+import com.example.freelancer.dto.AccountDTO;
 import com.example.freelancer.dto.CredentialDTO;
 import com.example.freelancer.dto.LoginDTO;
 import com.example.freelancer.entity.Account;
@@ -8,6 +9,10 @@ import com.example.freelancer.repository.AccountRepository;
 import com.example.freelancer.repository.CredentialRepository;
 import com.example.freelancer.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,18 +47,18 @@ public class AccountService {
         return null;
     }
 
-    public Account createAcount(String username, String fullname, String password, Account.Role role, Account.Status status) {
+    public Account createAccount(AccountDTO accountDTO) {
         Account account = new Account();
-        account.setUsername(username);
-        account.setPasswordHash(passwordEncoder.encode(password));
-        account.setRole(role);
-        account.setStatus(status);
+        account.setUsername(account.getUsername());
+        account.setPasswordHash(passwordEncoder.encode(accountDTO.getPassword()));
+        account.setRole(accountDTO.getRole());
+        account.setStatus(Account.Status.ACTIVATE);
         account.setCreatedAt(new Date());
         account.setUpdatedAt(new Date());
         return accountRepository.save(account);
     }
 
-    public Account createAcount2(Account account) {
+    public Account createAccount2(Account account) {
         account.setCreatedAt(new Date());
         account.setUpdatedAt(new Date());
         return accountRepository.save(account);
@@ -102,7 +107,64 @@ public class AccountService {
         return null;
     }
 
+    public boolean updateAccount(AccountDTO accountDTO) {
+        Optional<Account> opt = accountRepository.findById(accountDTO.getId());
+        if (opt.isPresent()) {
+            Account account = opt.get();
+            account.setUsername(accountDTO.getUsername());
+            account.setAmount(accountDTO.getAmount());
+            account.setUpdatedAt(new Date());
+            accountRepository.save(account);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteAccount(int accountId) {
+        Optional<Account> opt = accountRepository.findById(accountId);
+        if (opt.isPresent()) {
+            Account account = opt.get();
+            account.setStatus(Account.Status.DELETE);
+            accountRepository.save(account);
+            return true;
+        }
+        return false;
+    }
+
     public long count() {
         return accountRepository.count();
+    }
+
+    public Page<Account> getListAccount(
+            @Nullable Integer currentPage,
+            @Nullable Integer pageSize,
+            @Nullable Integer typeUser
+    ) {
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+
+        Account.Role role;
+        switch (typeUser) {
+            case 0:
+                role = Account.Role.ADMIN;
+                break;
+            case 1:
+                role = Account.Role.USER;
+                break;
+            case 2:
+                role = Account.Role.FREELANCER;
+                break;
+            default:
+                role = Account.Role.USER;
+                break;
+        }
+
+        Page<Account> result = accountRepository.findAllByRole(role, pageable);
+        return result;
     }
 }

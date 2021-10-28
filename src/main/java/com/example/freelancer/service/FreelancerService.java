@@ -1,5 +1,6 @@
 package com.example.freelancer.service;
 
+import com.example.freelancer.dto.AccountDTO;
 import com.example.freelancer.dto.FreelancerDTO;
 import com.example.freelancer.entity.Account;
 import com.example.freelancer.entity.Freelancer;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,5 +71,55 @@ public class FreelancerService {
         }
 
         return null;
+    }
+
+    // admin
+    public Page<Freelancer> getListFreelancerPagination(
+            @Nullable Integer currentPage,
+            @Nullable Integer pageSize
+    ) {
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+
+        Page<Freelancer> result = freelancerRepository.findAll(pageable);
+        return result;
+    }
+
+    public boolean updateFreelancer(FreelancerDTO freelancerDTO) {
+        Optional<Freelancer> opt = freelancerRepository.findById(freelancerDTO.getId());
+        if (opt.isPresent()) {
+            Freelancer freelancer = opt.get();
+            freelancer.setAddress(freelancerDTO.getAddress());
+            freelancer.setAverageIncome(freelancerDTO.getAverageIncome());
+            freelancer.setDescription(freelancerDTO.getDescription());
+            freelancer.setExperience(freelancerDTO.getExperience());
+            freelancer.setGender(freelancerDTO.getGender());
+            freelancer.setLanguage(freelancerDTO.getLanguage());
+            freelancer.setName(freelancerDTO.getName());
+            freelancer.setPhone(freelancerDTO.getPhone());
+            freelancer.setRate(freelancerDTO.getRate());
+            freelancer.setThumbnail(freelancerDTO.getThumbnail());
+            freelancer.setTitle(freelancerDTO.getTitle());
+            freelancer.setUpdated_at(new Date());
+            freelancerRepository.save(freelancer);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteFreelancer(int freelancerId) {
+        Optional<Freelancer> opt = freelancerRepository.findById(freelancerId);
+        if (opt.isPresent()) {
+            Freelancer freelancer = opt.get();
+            freelancer.setStatus(Freelancer.Status.DELETE);
+            freelancerRepository.save(freelancer);
+            return true;
+        }
+        return false;
     }
 }

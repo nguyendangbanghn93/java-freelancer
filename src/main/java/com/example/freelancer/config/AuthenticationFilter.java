@@ -1,5 +1,6 @@
 package com.example.freelancer.config;
 
+import org.apache.el.parser.TokenMgrError;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,9 +28,13 @@ public class AuthenticationFilter  extends AbstractAuthenticationProcessingFilte
         if(token == null) {
             throw new AuthenticationCredentialsNotFoundException("Token not found!");
         }
-        token = token.replaceAll("Bearer", "").trim();
-        Authentication authentication = new UsernamePasswordAuthenticationToken(token, token);
-        return getAuthenticationManager().authenticate(authentication);
+        try {
+            token = token.replaceAll("Bearer", "").trim();
+            Authentication authentication = new UsernamePasswordAuthenticationToken(token, token);
+            return getAuthenticationManager().authenticate(authentication);
+        } catch (Exception e) {
+            throw new TokenMgrError("Token Error", 0);
+        }
     }
 
     @Override
