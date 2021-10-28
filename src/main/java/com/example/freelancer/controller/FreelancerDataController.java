@@ -45,6 +45,10 @@ public class FreelancerDataController {
         if (freelancer == null) {
             return new ResponseAPI<FreelancerDTO>(null, APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
         }
-        return new ResponseAPI<FreelancerDTO>(freelancerService.findById(id).toFreelancerDTO(), APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+
+        FreelancerDTO freelancerDTO = freelancer.toFreelancerDTO();
+        freelancerDTO.setTotalJobDone(jobService.getTotalJobDone(freelancer.getId()));
+        freelancerDTO.setTotalEarning(jobService.getTotalEarning(freelancer.getId()));
+        return new ResponseAPI<FreelancerDTO>(freelancerDTO, APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
     }
 }
