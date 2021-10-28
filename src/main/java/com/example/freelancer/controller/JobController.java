@@ -1,6 +1,7 @@
 package com.example.freelancer.controller;
 
 import com.example.freelancer.dto.JobDTO;
+import com.example.freelancer.dto.MailDTO;
 import com.example.freelancer.entity.Job;
 import com.example.freelancer.resdto.ResponseAPI;
 import com.example.freelancer.service.JobService;
@@ -35,6 +36,12 @@ public class JobController {
         if (job != null) {
             return new ResponseAPI(job.toJobDTO(), APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
         }
+//        MailController mailController = new MailController();
+//        MailDTO mailDTO = new MailDTO();
+//        mailDTO.setTitle("title");
+//        mailDTO.setBody("<h1>xxx</h1>");
+//        mailDTO.setReceiver("minhduc95.hl@gmail.com");
+//        mailController.sendHtmlEmail(mailDTO);
         return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
     }
 
