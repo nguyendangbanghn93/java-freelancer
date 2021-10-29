@@ -49,9 +49,11 @@ public class AccountService {
 
     public Account createAccount(AccountDTO accountDTO) {
         Account account = new Account();
-        account.setUsername(account.getUsername());
+        account.setUsername(accountDTO.getUsername());
         account.setPasswordHash(passwordEncoder.encode(accountDTO.getPassword()));
         account.setRole(accountDTO.getRole());
+        account.setEmail(accountDTO.getEmail());
+        account.setAmount(accountDTO.getAmount());
         account.setStatus(Account.Status.ACTIVATE);
         account.setCreatedAt(new Date());
         account.setUpdatedAt(new Date());
@@ -114,6 +116,9 @@ public class AccountService {
             Account account = opt.get();
             account.setUsername(accountDTO.getUsername());
             account.setAmount(accountDTO.getAmount());
+            if (accountDTO.getPassword() != null) {
+                account.setPasswordHash(passwordEncoder.encode(accountDTO.getPassword()));
+            }
             account.setUpdatedAt(new Date());
             accountRepository.save(account);
             return true;

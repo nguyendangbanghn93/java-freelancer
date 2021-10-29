@@ -1,8 +1,10 @@
 package com.example.freelancer.admin_controller;
 
+import com.example.freelancer.dto.AccountDTO;
 import com.example.freelancer.dto.CredentialDTO;
 import com.example.freelancer.dto.LoginDTO;
 import com.example.freelancer.entity.Account;
+import com.example.freelancer.resdto.LoginAdminRes;
 import com.example.freelancer.resdto.ResponseAPI;
 import com.example.freelancer.service.AccountService;
 import com.example.freelancer.util.APIMessage;
@@ -17,10 +19,10 @@ public class LoginController {
     AccountService accountService;
 
     @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
-    public ResponseAPI<CredentialDTO> loginAdmin(
+    public ResponseAPI<LoginAdminRes> loginAdmin(
             @RequestBody LoginDTO loginDTO
     ) {
-        ResponseAPI<CredentialDTO> responseAPI = new ResponseAPI<>();
+        ResponseAPI<LoginAdminRes> responseAPI = new ResponseAPI<>();
         try {
             CredentialDTO credential = accountService.login(loginDTO);
             if (credential == null) {
@@ -29,17 +31,20 @@ public class LoginController {
             } else {
                 Account account = accountService.findById(credential.getAccountId());
                 if (account.getRole() == Account.Role.ADMIN) {
-                    responseAPI.setData(credential);
+                    LoginAdminRes loginAdminRes = new LoginAdminRes();
+                    loginAdminRes.setCredential(credential);
+                    loginAdminRes.setAccount(new AccountDTO(account));
+                    responseAPI.setData(loginAdminRes);
                     responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                    responseAPI.setCode(APIStatusCode.SUCCESS);
+                    responseAPI.setStatus(APIStatusCode.SUCCESS);
                 } else {
                     responseAPI.setMessage(APIMessage.PERMISSION_DENIED);
-                    responseAPI.setCode(APIStatusCode.PERMISSION_DENIED);
+                    responseAPI.setStatus(APIStatusCode.PERMISSION_DENIED);
                 }
             }
         } catch (Exception e) {
             responseAPI.setMessage(e.toString());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
