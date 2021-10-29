@@ -17,13 +17,10 @@ import javax.mail.internet.MimeMessage;
 
 
 @Controller
-@RequestMapping(value = "/mail")
 public class MailController {
-    @Autowired
-    public JavaMailSender emailSender;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/send")
-    public String sendHtmlEmail(@RequestBody MailDTO mailDTO) throws MessagingException {
+    public String sendHtmlEmail(MailDTO mailDTO, JavaMailSender emailSender) throws MessagingException {
+        System.out.println(mailDTO.toString());
         if (mailDTO == null)
             return "Lỗi";
         MimeMessage message = emailSender.createMimeMessage();
@@ -41,7 +38,7 @@ public class MailController {
         helper.setSubject(mailDTO.getTitle());
 
 
-        this.emailSender.send(message);
+        emailSender.send(message);
 
         return "Email Sent!";
     }

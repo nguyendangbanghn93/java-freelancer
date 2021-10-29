@@ -13,4 +13,13 @@ public class MailDTO {
     private String title;
     private String body;//html
     private String receiver;
+
+    @Override
+    public String toString() {
+        return "MailDTO{" +
+                "title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", receiver='" + receiver + '\'' +
+                '}';
+    }
 }
