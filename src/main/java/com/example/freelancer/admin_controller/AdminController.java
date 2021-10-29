@@ -60,7 +60,7 @@ public class AdminController {
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
             responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -75,7 +75,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -92,7 +92,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -112,7 +112,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -132,7 +132,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -168,7 +168,7 @@ public class AdminController {
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
             responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -184,7 +184,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -205,7 +205,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -225,7 +225,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -245,7 +245,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -280,7 +280,7 @@ public class AdminController {
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
             responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -295,7 +295,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -312,7 +312,7 @@ public class AdminController {
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -332,7 +332,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -352,7 +352,7 @@ public class AdminController {
                 responseAPI.setCode(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setCode(APIStatusCode.ERROR);
         }
         return responseAPI;
@@ -389,7 +389,7 @@ public class AdminController {
             responseAPI.setCode(APIStatusCode.SUCCESS);
         } catch (Exception e) {
             responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }

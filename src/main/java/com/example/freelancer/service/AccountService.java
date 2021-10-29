@@ -92,6 +92,7 @@ public class AccountService {
         credential.setAccessToken(UUID.randomUUID().toString());
         credential.setRefreshToken(UUID.randomUUID().toString());
         credential.setAccount(account);
+        credential.setAccountId(account.getId());
         credential.setCreatedAt(new Date());
         credential.setExpiredAt(TimeUtil.addDaysToCurrentTime(5));//Thời hạn 5 ngày
         Credential saved = credentialRepository.save(credential);

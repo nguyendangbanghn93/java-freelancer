@@ -12,6 +12,7 @@ public class CredentialDTO {
     private Date createdAt;
     private boolean isExpired;
     private int status;
+    private int accountId;
 
     public CredentialDTO(Credential credential) {
         this.accessToken = credential.getAccessToken();
@@ -19,5 +20,6 @@ public class CredentialDTO {
         this.createdAt = credential.getCreatedAt();
         this.isExpired = credential.isExpired();
         this.status = credential.getStatus();
+        this.accountId = credential.getAccountId();
     }
 }
