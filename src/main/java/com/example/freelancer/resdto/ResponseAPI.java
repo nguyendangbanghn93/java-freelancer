@@ -13,8 +13,15 @@ public class ResponseAPI<T> {
     private T data;
     private String message;
     private int code;
+    private int status;
 
     public ResponseAPI(String message, int code) {
+        this.message = message;
+        this.code = code;
+    }
+
+    public ResponseAPI(T data, String message, int code) {
+        this.data = data;
         this.message = message;
         this.code = code;
     }

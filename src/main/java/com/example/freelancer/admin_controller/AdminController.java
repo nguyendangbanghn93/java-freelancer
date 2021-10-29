@@ -57,10 +57,10 @@ public class AdminController {
 
             responseAPI.setData(accountRes);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -73,10 +73,10 @@ public class AdminController {
         try {
             accountService.createAccount(accountDTO);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -90,10 +90,10 @@ public class AdminController {
             Account account = accountService.findById(accountId);
             responseAPI.setData(new AccountDTO(account));
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -106,14 +106,14 @@ public class AdminController {
         try {
             if (accountService.updateAccount(accountDTO)) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.ACCOUNT_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -126,14 +126,14 @@ public class AdminController {
         try {
             if (accountService.deleteAccount(accountId)) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.ACCOUNT_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -165,10 +165,10 @@ public class AdminController {
 
             responseAPI.setData(freelancerRes);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -182,10 +182,10 @@ public class AdminController {
             Account account = accountService.findById(freelancerDTO.getAccountId());
             freelancerService.register(freelancerDTO, account);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -203,10 +203,10 @@ public class AdminController {
 
             responseAPI.setData(freelancerDTO);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -219,14 +219,14 @@ public class AdminController {
         try {
             if (freelancerService.updateFreelancer(freelancerDTO)) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.ACCOUNT_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -239,14 +239,14 @@ public class AdminController {
         try {
             if (freelancerService.deleteFreelancer(freelancerId)) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.ACCOUNT_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -277,10 +277,10 @@ public class AdminController {
 
             responseAPI.setData(jobRes);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
@@ -293,10 +293,10 @@ public class AdminController {
         try {
             jobService.createJob(jobDTO);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -310,10 +310,10 @@ public class AdminController {
             Job job = jobService.getDetailJob(jobId);
             responseAPI.setData(job.toJobDTO());
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -326,14 +326,14 @@ public class AdminController {
         try {
             if (jobService.updateJob(jobDTO) != null) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.JOB_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -346,14 +346,14 @@ public class AdminController {
         try {
             if (jobService.deleteJob(jobId)) {
                 responseAPI.setMessage(APIMessage.MES_SUCCESS);
-                responseAPI.setCode(APIStatusCode.SUCCESS);
+                responseAPI.setStatus(APIStatusCode.SUCCESS);
             } else {
                 responseAPI.setMessage(APIMessage.ACCOUNT_NOT_FOUND);
-                responseAPI.setCode(APIStatusCode.ERROR);
+                responseAPI.setStatus(APIStatusCode.ERROR);
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.getMessage());
-            responseAPI.setCode(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;
     }
@@ -386,10 +386,10 @@ public class AdminController {
 
             responseAPI.setData(transactionRes);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
-            responseAPI.setCode(APIStatusCode.SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
-            responseAPI.setCode(APIStatusCode.ERROR);
-            responseAPI.setMessage(e.getMessage());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
         }
         return responseAPI;
     }
