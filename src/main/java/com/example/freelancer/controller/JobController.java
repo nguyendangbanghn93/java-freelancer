@@ -111,7 +111,6 @@ public class JobController {
             @RequestBody JobDTO jobDTO
     ) {
         Job job = jobService.updateJob(jobDTO);
-        System.out.println(job);
         if (job != null) {
             MailDTO mailDTO = new MailDTO();
             //freelancer ko nhan job

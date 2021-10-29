@@ -20,7 +20,6 @@ import javax.mail.internet.MimeMessage;
 public class MailController {
 
     public String sendHtmlEmail(MailDTO mailDTO, JavaMailSender emailSender) throws MessagingException {
-        System.out.println(mailDTO.toString());
         if (mailDTO == null)
             return "Lỗi";
         MimeMessage message = emailSender.createMimeMessage();
