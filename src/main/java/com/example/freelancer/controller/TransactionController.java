@@ -22,6 +22,16 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+    @RequestMapping(method = RequestMethod.GET, value = "/transaction-all")
+    public ResponseAPI<TransactionHistoryRes> listTransaction(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date startDate,
+                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date endDate) {
+        TransactionHistoryRes transactionHistories = transactionService.allTranscationHistory();
+        if (transactionHistories != null) {
+            return new ResponseAPI(transactionHistories, APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
+        }
+        return new ResponseAPI(APIMessage.MES_ERROR, APIStatusCode.ERROR);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/transaction")
     public ResponseAPI<Object[]> listTransactionFilter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date startDate,
                                                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date endDate) {
