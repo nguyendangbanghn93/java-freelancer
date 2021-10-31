@@ -8,7 +8,11 @@ import com.example.freelancer.service.TransactionService;
 import com.example.freelancer.util.APIMessage;
 import com.example.freelancer.util.APIStatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @CrossOrigin
@@ -16,9 +20,12 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/transaction")
-    public ResponseAPI<TransactionHistoryRes> listTransaction() {
-        TransactionHistoryRes transactionHistories = transactionService.allTranscationHistory();
+    @RequestMapping(method = RequestMethod.GET, value = "/transaction")
+    public ResponseAPI<TransactionHistoryRes> listTransactionFilter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date startDate,
+                                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date endDate) {
+        System.out.println(startDate);
+        System.out.println(endDate);
+        TransactionHistoryRes transactionHistories = transactionService.allTranscationHistory(startDate, endDate);
         if (transactionHistories != null) {
             return new ResponseAPI(transactionHistories, APIMessage.MES_SUCCESS, APIStatusCode.SUCCESS);
         }

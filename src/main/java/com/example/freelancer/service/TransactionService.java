@@ -28,10 +28,23 @@ public class TransactionService {
     @Autowired
     AccountRepository accountRepository;
 
-    public TransactionHistoryRes allTranscationHistory(){
+    public TransactionHistoryRes allTranscationHistory() {
         try {
             TransactionHistoryRes transactionHistoryRes = new TransactionHistoryRes();
             transactionHistoryRes.setList(transactionHistoryRepository.findAll().stream().map(x -> x.toTransactionHistoryDTO()).collect(Collectors.toList()));
+            transactionHistoryRes.setTotalSum(transactionHistoryRepository.getSumTransaction());
+
+            return transactionHistoryRes;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public TransactionHistoryRes allTranscationHistory(Date startDate, Date endDate) {
+        try {
+            TransactionHistoryRes transactionHistoryRes = new TransactionHistoryRes();
+            transactionHistoryRes.setList(transactionHistoryRepository.getTransactionHistoryByCreatedAtBetween(startDate, endDate).stream().map(x -> x.toTransactionHistoryDTO()).collect(Collectors.toList()));
             transactionHistoryRes.setTotalSum(transactionHistoryRepository.getSumTransaction());
 
             return transactionHistoryRes;
