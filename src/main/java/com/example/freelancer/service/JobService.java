@@ -89,7 +89,7 @@ public class JobService {
             job1.setRate(jobDTO.getRate());
             job1.setComment(jobDTO.getComment());
 
-            if (job1.getStatus() == 2 || (job1.getStatus() == 4 && job1.toJobDTO().getResult() != null)) {
+            if ((job1.getStatus() == 2 && job1.toJobDTO().getResult() == null) || (job1.getStatus() == 4)) {
                 Optional<SystemConfig> optionalSystemConfig = systemConfigRepository.findTopByOrderById();
                 SystemConfig systemConfig = new SystemConfig();
                 TransactionHistory transactionHistory = new TransactionHistory();
