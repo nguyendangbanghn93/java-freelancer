@@ -122,4 +122,8 @@ public class FreelancerService {
         }
         return false;
     }
+
+    public List<Freelancer> findAll() {
+        return freelancerRepository.findAll();
+    }
 }

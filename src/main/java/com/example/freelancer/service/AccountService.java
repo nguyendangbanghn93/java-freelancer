@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -172,5 +173,9 @@ public class AccountService {
 
         Page<Account> result = accountRepository.findAllByRole(role, pageable);
         return result;
+    }
+
+    public List<Account> findAll() {
+        return accountRepository.findAll();
     }
 }

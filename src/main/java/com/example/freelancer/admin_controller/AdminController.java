@@ -154,7 +154,7 @@ public class AdminController {
             List<FreelancerDTO> list = new ArrayList<>();
 
             listPage.forEach((el) -> {
-                FreelancerDTO freelancerDTO = el.toFreelancerDTO2();
+                FreelancerDTO freelancerDTO = el.toFreelancerDTO();
                 freelancerDTO.setTotalJobDone(jobService.getTotalJobDone(freelancerDTO.getId()));
                 freelancerDTO.setTotalEarning(jobService.getTotalEarning(freelancerDTO.getId()));
                 list.add(freelancerDTO);
@@ -269,7 +269,7 @@ public class AdminController {
             listPage.forEach((el) -> {
                 JobDTO jobDTO = el.toJobDTO();
                 jobDTO.setAccount(new AccountDTO(accountService.findById(jobDTO.getAccountId())));
-                jobDTO.setFreelancer(freelancerService.findById(jobDTO.getFreelancerId()).toFreelancerDTO2());
+                jobDTO.setFreelancer(freelancerService.findById(jobDTO.getFreelancerId()).toFreelancerDTO());
                 list.add(jobDTO);
             });
             jobRes.setList(list);
@@ -308,7 +308,7 @@ public class AdminController {
         ResponseAPI<JobDTO> responseAPI = new ResponseAPI<>();
         try {
             Job job = jobService.getDetailJob(jobId);
-            responseAPI.setData(job.toJobDTO());
+            responseAPI.setData(job.toJobDTO2());
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {
@@ -394,4 +394,28 @@ public class AdminController {
         return responseAPI;
     }
     // endregion transaction
+
+    // region statistical
+    @RequestMapping(method = RequestMethod.GET, value = "/statistic/account")
+    public ResponseAPI<StatisticAccount> getStatisticAccount(
+    ) {
+        ResponseAPI<StatisticAccount> responseAPI = new ResponseAPI<>();
+
+        try {
+            StatisticAccount statisticAccount = new StatisticAccount();
+            int totalAccount = accountService.findAll().size();
+            int totalFreelancer = freelancerService.findAll().size();
+            statisticAccount.setTotalUserNormal(totalAccount - totalFreelancer);
+            statisticAccount.setTotalFreelancer(totalFreelancer);
+
+            responseAPI.setData(statisticAccount);
+            responseAPI.setMessage(APIMessage.MES_SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
+        } catch (Exception e) {
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+        }
+        return responseAPI;
+    }
+    // endregion statistical
 }

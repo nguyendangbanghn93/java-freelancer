@@ -1,5 +1,7 @@
 package com.example.freelancer.entity;
 
+import com.example.freelancer.dto.AccountDTO;
+import com.example.freelancer.dto.FreelancerDTO;
 import com.example.freelancer.dto.JobDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,5 +55,27 @@ public class Job {
     private int freelancerId;
     public JobDTO toJobDTO(){
         return new JobDTO(id,salary,subject,description,type,status,result,response_date,invited_user_id,accountId,freelancerId, created_at, updated_at, rate, comment);
+    }
+
+    public JobDTO toJobDTO2(){
+        return new JobDTO(
+            id,
+            salary,
+            subject,
+            description,
+            type,
+            status,
+            result,
+            response_date,
+            invited_user_id,
+            accountId,
+            freelancerId,
+            created_at,
+            updated_at,
+            rate,
+            comment,
+            new AccountDTO(account),
+            freelancer.toFreelancerDTO()
+        );
     }
 }
