@@ -1,5 +1,6 @@
 package com.example.freelancer.service;
 
+import com.example.freelancer.dto.ShortTransactionDTO;
 import com.example.freelancer.entity.Account;
 import com.example.freelancer.entity.TransactionHistory;
 import com.example.freelancer.repository.AccountRepository;
@@ -13,7 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -41,13 +45,9 @@ public class TransactionService {
         }
     }
 
-    public TransactionHistoryRes allTranscationHistory(Date startDate, Date endDate) {
+    public List<Object[]> allTranscationHistory(Date startDate, Date endDate) {
         try {
-            TransactionHistoryRes transactionHistoryRes = new TransactionHistoryRes();
-            transactionHistoryRes.setList(transactionHistoryRepository.getTransactionHistoryByCreatedAtBetween(startDate, endDate).stream().map(x -> x.toTransactionHistoryDTO()).collect(Collectors.toList()));
-            transactionHistoryRes.setTotalSum(transactionHistoryRepository.getSumTransaction());
-
-            return transactionHistoryRes;
+            return transactionHistoryRepository.getTransactionHistoryByCreatedAtBetween(startDate, endDate);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
