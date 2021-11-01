@@ -448,6 +448,14 @@ public class AdminController {
     ) {
         ResponseAPI responseAPI = new ResponseAPI<>();
         try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(startDate);
+            c.add(Calendar.DATE, -1);
+            startDate = c.getTime();
+
+            c.setTime(endDate);
+            c.add(Calendar.DATE, 1);
+            endDate = c.getTime();
             List<Object> listFinancial = jobService.getFinancial(startDate, endDate);
 
             responseAPI.setData(listFinancial);

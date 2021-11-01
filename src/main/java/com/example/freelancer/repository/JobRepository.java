@@ -29,6 +29,6 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     @Query("SELECT j FROM Job j WHERE j.status = :status")
     List<Job> findAllByStatus(int status);
 
-    @Query("SELECT m.updated_at,SUM(m.salary * 0.1) FROM Job m WHERE m.status = 4 AND m.updated_at BETWEEN :startDate and :endDate GROUP BY m.updated_at")
+    @Query("SELECT DATE(m.updated_at),SUM(m.salary * 0.1) FROM Job m WHERE m.status = 4 AND m.updated_at BETWEEN :startDate and :endDate GROUP BY DATE(m.updated_at)")
     List<Object> getFinancial(Date startDate, Date endDate);
 }
