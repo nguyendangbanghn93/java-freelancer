@@ -17,11 +17,11 @@ import com.example.freelancer.util.APIMessage;
 import com.example.freelancer.util.APIStatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -397,18 +397,60 @@ public class AdminController {
 
     // region statistical
     @RequestMapping(method = RequestMethod.GET, value = "/statistic/account")
-    public ResponseAPI<StatisticAccount> getStatisticAccount(
+    public ResponseAPI<StatisticAccountRes> getStatisticAccount(
     ) {
-        ResponseAPI<StatisticAccount> responseAPI = new ResponseAPI<>();
+        ResponseAPI<StatisticAccountRes> responseAPI = new ResponseAPI<>();
 
         try {
-            StatisticAccount statisticAccount = new StatisticAccount();
+            StatisticAccountRes statisticAccount = new StatisticAccountRes();
             int totalAccount = accountService.findAll().size();
             int totalFreelancer = freelancerService.findAll().size();
             statisticAccount.setTotalUserNormal(totalAccount - totalFreelancer);
             statisticAccount.setTotalFreelancer(totalFreelancer);
 
             responseAPI.setData(statisticAccount);
+            responseAPI.setMessage(APIMessage.MES_SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
+        } catch (Exception e) {
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+        }
+        return responseAPI;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/statistic/job")
+    public ResponseAPI<StatisticJobRes> getStatisticJob(
+    ) {
+        ResponseAPI<StatisticJobRes> responseAPI = new ResponseAPI<>();
+
+        try {
+            StatisticJobRes statisticJobRes = new StatisticJobRes();
+            statisticJobRes.setTotalJob(jobService.getListJob().size());
+            statisticJobRes.setTotalJobClosed(jobService.statisticJobByStatus(0));
+            statisticJobRes.setTotalJobPending(jobService.statisticJobByStatus(1));
+            statisticJobRes.setTotalJobDoing(jobService.statisticJobByStatus(2));
+            statisticJobRes.setTotalJobDone(jobService.statisticJobByStatus(4));
+
+            responseAPI.setData(statisticJobRes);
+            responseAPI.setMessage(APIMessage.MES_SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
+        } catch (Exception e) {
+            responseAPI.setStatus(APIStatusCode.ERROR);
+            responseAPI.setMessage(e.toString());
+        }
+        return responseAPI;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/statistic/financial")
+    public ResponseAPI getStatisticFinancial(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Nullable Date endDate
+    ) {
+        ResponseAPI responseAPI = new ResponseAPI<>();
+        try {
+            List<Object> listFinancial = jobService.getFinancial(startDate, endDate);
+
+            responseAPI.setData(listFinancial);
             responseAPI.setMessage(APIMessage.MES_SUCCESS);
             responseAPI.setStatus(APIStatusCode.SUCCESS);
         } catch (Exception e) {

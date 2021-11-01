@@ -190,4 +190,12 @@ public class JobService {
         }
         return false;
     }
+
+    public int statisticJobByStatus(int status) {
+        return jobRepository.findAllByStatus(status).size();
+    }
+
+    public List<Object> getFinancial(Date startDate, Date endDate) {
+        return jobRepository.getFinancial(startDate, endDate);
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job,Integer> {
@@ -24,4 +25,10 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
 
     @Query("SELECT j FROM Job j ORDER BY created_at DESC")
     Page<Job> findAll(Pageable pageable);
+
+    @Query("SELECT j FROM Job j WHERE j.status = :status")
+    List<Job> findAllByStatus(int status);
+
+    @Query("SELECT m.updated_at,SUM(m.salary * 0.1) FROM Job m WHERE m.status = 4 AND m.updated_at BETWEEN :startDate and :endDate GROUP BY m.updated_at")
+    List<Object> getFinancial(Date startDate, Date endDate);
 }

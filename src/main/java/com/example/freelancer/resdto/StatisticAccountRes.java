@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatisticAccount {
+public class StatisticAccountRes {
     private int totalUserNormal;
     private int totalFreelancer;
 }
