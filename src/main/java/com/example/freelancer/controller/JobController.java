@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 public class JobController {
+    private String domainName = "http://localhost:8080/job";
+
     @Autowired
     public JavaMailSender emailSender;
 
@@ -54,7 +56,7 @@ public class JobController {
             try {
                 MailDTO mailDTO = new MailDTO();
                 mailDTO.setTitle("You received a job offer");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -70,6 +72,9 @@ public class JobController {
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">You received a job offer, log in to FFlance to view job details</p>\n" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -93,7 +98,9 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
 
                 MailController mailController = new MailController();
@@ -116,8 +123,9 @@ public class JobController {
             //freelancer ko nhan job
             if (job.toJobDTO().getStatus() == 0) {
                 Account account = accountService.findById(job.toJobDTO().getAccountId());
-                mailDTO.setTitle("Freelancer refuse your job");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
+                mailDTO.setTitle("Freelancer refuse your job this one");
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -132,7 +140,7 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Freelancer refuse your job, log in to FFlance to find another</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">{FreelancerName} refuse your \"{JobSubject}\" job, log in to FFlance to find another</p>\n" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -156,15 +164,19 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
+                bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
-            //user update tien
+            //user update money
             if (job.toJobDTO().getStatus() == 1) {
                 Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
                 Account account = accountService.findById(freelancer.getAccountId());
                 mailDTO.setTitle("Salary has been updated");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -179,7 +191,10 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Salary has been updated, log in to FFlance to view details</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Salary of \"{JobSubject}\" has been updated, log in to FFlance to view details</p>\n" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -203,14 +218,20 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
-            //freelancer nhan job
+            //freelancer nhân job
             if (job.toJobDTO().getStatus() == 2 && job.toJobDTO().getResult() == null) {
                 Account account = accountService.findById(job.toJobDTO().getAccountId());
-                mailDTO.setTitle("Freelancer accept your job");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
+                String title = "{FreelancerName} was accepted your job";
+                title = title.replace("{FreelancerName}", freelancer.getName());
+                mailDTO.setTitle(title);
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -226,6 +247,10 @@ public class JobController {
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Freelancer accept your job, log in to FFlance to view details</p>\n" +
+                        "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -249,14 +274,22 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
+                bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
             //freelancer hand in job
             if (job.toJobDTO().getStatus() == 3) {
                 Account account = accountService.findById(job.toJobDTO().getAccountId());
-                mailDTO.setTitle("Freelancer hand in product");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
+                String title = "{FreelancerName} hand in product";
+                title = title.replace("{FreelancerName}", freelancer.getName());
+                mailDTO.setTitle(title);
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -271,7 +304,11 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Freelancer hand in product for your job, log in to FFlance to view details</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">{FreelancerName} hand in product for your \"{jobDetail}\", log in to FFlance to view details</p>\n" +
+                        "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -295,7 +332,12 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
+                bodyContent = bodyContent.replace("{jobDetail}", jobDTO.getSubject());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
             //user xác nhận job done
@@ -303,7 +345,7 @@ public class JobController {
                 Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
                 Account account = accountService.findById(freelancer.getAccountId());
                 mailDTO.setTitle("Your work is done!");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -318,7 +360,11 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Your work is done, log in to FFlance to see your earnings</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Your work have done by {FreelancerName}, log in to FFlance to see your earnings</p>\n" +
+                        "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -342,7 +388,11 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
             //user reject job
@@ -350,7 +400,7 @@ public class JobController {
                 Freelancer freelancer = freelancerService.findById(job.toJobDTO().getFreelancerId());
                 Account account = accountService.findById(freelancer.getAccountId());
                 mailDTO.setTitle("Your job was rejected");
-                mailDTO.setBody("<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
+                String bodyContent = "<table class=\"wrapper\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;\"><tr>\n" +
                         "        <td align=\"center\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;\">\n" +
                         "            <table class=\"content\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;\">\n" +
                         "                <tr>\n" +
@@ -365,7 +415,11 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Your job was rejected, log in to FFlance to view details</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Your job was rejected by {FreelancerName}, log in to FFlance to view details</p>\n" +
+                        "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>"+
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -389,7 +443,11 @@ public class JobController {
                         "            </table>\n" +
                         "        </td>\n" +
                         "    </tr>\n" +
-                        "</table>");
+                        "</table>";
+                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
+                mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
             }
             try {
