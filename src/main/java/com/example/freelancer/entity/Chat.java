@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="chats")
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +25,5 @@ public class Chat {
     private Job job;
 
     @Column(insertable = false, updatable = false)
-    private String jobId;
+    private int jobId;
 }
