@@ -13,8 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "credentials")
 public class Credential {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String accessToken;
     private String refreshToken;
     private Date createdAt;
