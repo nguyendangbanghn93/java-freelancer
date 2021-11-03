@@ -99,8 +99,8 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("#{accountName}", jobDTO.getAccount().getUsername());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + job.getId());
+                bodyContent = bodyContent.replace("{accountName}", job.getAccount().getUsername());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
 
