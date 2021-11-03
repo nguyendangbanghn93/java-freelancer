@@ -103,11 +103,7 @@ public class JobService {
                 if (job1.getStatus() == 2) {
                     Account account = accountRepository.getById(job1.getAccountId());
                     // Khi freelancer nhận job , thu tiền user tạo job
-                    if (account.getAmount() - job1.getSalary() < 0) {
-                        return null;
-                    }
                     account.setAmount(account.getAmount() - job1.getSalary());
-                    systemConfig.setAmount(systemConfigAmount + job1.getSalary());
                     transactionHistory.setAmount(job1.getSalary());
                     transactionHistory.setType(2);
                     transactionHistory.setAccountId(job1.getAccountId());
@@ -115,9 +111,6 @@ public class JobService {
                 } else {
                     double additionalFee = job1.getSalary() / 10;
                     // Freelancer done job , trả tiền cho freelancer trừ phí giao dijch
-                    if (systemConfigAmount - (job1.getSalary() - additionalFee) < 0) {
-                        return null;
-                    }
                     freelancerAccount.setAmount(freelancerAccount.getAmount() + (job1.getSalary() - additionalFee));
                     systemConfig.setAmount(systemConfigAmount - (job1.getSalary() - additionalFee));
                     transactionHistory.setAmount(-(job1.getSalary() - additionalFee));
