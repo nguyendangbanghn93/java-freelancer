@@ -100,7 +100,7 @@ public class JobController {
                         "    </tr>\n" +
                         "</table>";
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("#{accountName}", jobDTO.getAccount().getName());
+                bodyContent = bodyContent.replace("#{accountName}", jobDTO.getAccount().getUsername());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
 
