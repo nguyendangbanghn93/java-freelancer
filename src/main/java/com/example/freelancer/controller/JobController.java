@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 public class JobController {
-    private String domainName = "http://localhost:8080/job";
+    private String domainName = "http://localhost:8080/job/";
 
     @Autowired
     public JavaMailSender emailSender;
@@ -71,10 +71,10 @@ public class JobController {
                         "                            <!-- Body content --><tr>\n" +
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
-                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">You received a job offer, log in to FFlance to view job details</p>\n" +
+                        "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">You received a job offer from {accountName}, log in to FFlance to view job details</p>\n" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -99,7 +99,8 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
+                bodyContent = bodyContent.replace("#{accountName}", jobDTO.getAccount().getName());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
 
@@ -165,7 +166,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
                 mailDTO.setBody(bodyContent);
@@ -194,7 +195,7 @@ public class JobController {
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Salary of \"{JobSubject}\" has been updated, log in to FFlance to view details</p>\n" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -219,7 +220,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
@@ -250,7 +251,7 @@ public class JobController {
                         "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -275,7 +276,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
@@ -308,7 +309,7 @@ public class JobController {
                         "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -333,7 +334,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{jobDetail}", jobDTO.getSubject());
@@ -364,7 +365,7 @@ public class JobController {
                         "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -389,7 +390,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 mailDTO.setBody(bodyContent);
@@ -419,7 +420,7 @@ public class JobController {
                         "                                   <div style=\"\ntext-align-last: center;\n\"> <img src=\"{FreelancerImage}\" style=\"border-radius: 50%;width: 100px;height: 100px;\"></div>" +
                         "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
                         "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
-                        "</div>"+
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -444,7 +445,7 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
-                bodyContent = bodyContent.replace("#{jobPage}",domainName+jobDTO.getId());
+                bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 mailDTO.setBody(bodyContent);
