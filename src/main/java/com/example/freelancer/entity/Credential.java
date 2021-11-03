@@ -15,6 +15,7 @@ import java.util.Date;
 @Entity
 public class Credential {
     @Id
+    @Column(length = 100)
     private String accessToken;
     private String refreshToken;
     private Date createdAt;
