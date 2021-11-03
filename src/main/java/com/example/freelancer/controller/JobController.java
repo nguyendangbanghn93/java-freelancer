@@ -277,7 +277,7 @@ public class JobController {
                         "    </tr>\n" +
                         "</table>";
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
                 mailDTO.setBody(bodyContent);
@@ -335,7 +335,7 @@ public class JobController {
                         "    </tr>\n" +
                         "</table>";
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{jobDetail}", jobDTO.getSubject());
                 mailDTO.setBody(bodyContent);
@@ -391,7 +391,7 @@ public class JobController {
                         "    </tr>\n" +
                         "</table>";
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());
@@ -446,7 +446,7 @@ public class JobController {
                         "    </tr>\n" +
                         "</table>";
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
-                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail());
+                bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 mailDTO.setBody(bodyContent);
                 mailDTO.setReceiver(account.getEmail());

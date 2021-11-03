@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 public class Freelancer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
