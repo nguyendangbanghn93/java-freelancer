@@ -20,6 +20,12 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     @Query("SELECT j FROM Job j WHERE j.accountId = :accountId ORDER BY j.id DESC ")
     List<Job> getListJobByAccountId(Integer accountId);
 
+    @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId AND j.status = 4 ORDER BY j.id DESC ")
+    List<Job> getListJobDoneByFreelancerId(Integer freelancerId);
+
+    @Query("SELECT j FROM Job j WHERE j.accountId = :accountId AND j.status = 4 ORDER BY j.id DESC ")
+    List<Job> getListJobDoneByAccountId(Integer accountId);
+
     @Query("SELECT j FROM Job j WHERE j.accountId = :accountId AND j.freelancerId = :freelancerId ORDER BY j.id DESC ")
     List<Job> getListJobByAccountIdAndFreelancerId(Integer accountId, Integer freelancerId);
 

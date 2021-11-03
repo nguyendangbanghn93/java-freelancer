@@ -91,6 +91,9 @@ public class AccountService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), account.getPasswordHash())) {
             return null;
         }
+        if (account.getStatus() == Account.Status.DELETE) {
+            return null;
+        }
         Credential credential = new Credential();
         credential.setAccessToken(UUID.randomUUID().toString());
         credential.setRefreshToken(UUID.randomUUID().toString());

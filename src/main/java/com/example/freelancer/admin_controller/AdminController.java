@@ -118,9 +118,9 @@ public class AdminController {
         return responseAPI;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/account/delete")
+    @RequestMapping(method = RequestMethod.GET, value = "/account/delete")
     public ResponseAPI deleteAccount(
-            @RequestBody int accountId
+            @RequestParam int accountId
     ) {
         ResponseAPI responseAPI = new ResponseAPI();
         try {
@@ -231,9 +231,9 @@ public class AdminController {
         return responseAPI;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/freelancer/delete")
+    @RequestMapping(method = RequestMethod.GET, value = "/freelancer/delete")
     public ResponseAPI deleteFreelancer(
-            @RequestBody int freelancerId
+            @RequestParam int freelancerId
     ) {
         ResponseAPI responseAPI = new ResponseAPI();
         try {
@@ -338,9 +338,9 @@ public class AdminController {
         return responseAPI;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/job/delete")
+    @RequestMapping(method = RequestMethod.GET, value = "/job/delete")
     public ResponseAPI deleteJob(
-            @RequestBody int jobId
+            @RequestParam int jobId
     ) {
         ResponseAPI responseAPI = new ResponseAPI();
         try {
@@ -357,7 +357,43 @@ public class AdminController {
         }
         return responseAPI;
     }
-    // endregion account
+
+    @RequestMapping(method = RequestMethod.GET, value = "/job/getJobDoneByAccountID")
+    public ResponseAPI<List<JobDTO>> getListJobDoneByAccountId(
+            @RequestParam Integer accountId
+    ) {
+        ResponseAPI responseAPI = new ResponseAPI();
+        try {
+            List<Job> list = jobService.getListJobDoneByAccountId(accountId);
+            responseAPI.setData(list.stream().map(x -> x.toJobDTO()).collect(Collectors.toList()));
+            responseAPI.setMessage(APIMessage.MES_SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
+
+        } catch (Exception e) {
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+        }
+        return responseAPI;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/job/getJobDoneByFreelancerId")
+    public ResponseAPI<List<JobDTO>> getListJobDoneByFreelancerId(
+            @RequestParam Integer freelancerId
+    ) {
+        ResponseAPI responseAPI = new ResponseAPI();
+        try {
+            List<Job> list = jobService.getListJobDoneByFreelancerId(freelancerId);
+            responseAPI.setData(list.stream().map(x -> x.toJobDTO()).collect(Collectors.toList()));
+            responseAPI.setMessage(APIMessage.MES_SUCCESS);
+            responseAPI.setStatus(APIStatusCode.SUCCESS);
+
+        } catch (Exception e) {
+            responseAPI.setMessage(e.toString());
+            responseAPI.setStatus(APIStatusCode.ERROR);
+        }
+        return responseAPI;
+    }
+    // endregion job
 
     // region transaction
     @RequestMapping(method = RequestMethod.GET, value = "/transaction")

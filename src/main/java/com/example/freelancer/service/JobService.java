@@ -198,4 +198,12 @@ public class JobService {
     public List<Object> getFinancial(Date startDate, Date endDate) {
         return jobRepository.getFinancial(startDate, endDate);
     }
+
+    public List<Job> getListJobDoneByAccountId(Integer accountId) {
+        return jobRepository.getListJobDoneByAccountId(accountId);
+    }
+
+    public List<Job> getListJobDoneByFreelancerId(Integer freelancerId) {
+        return jobRepository.getListJobDoneByFreelancerId(freelancerId);
+    }
 }
