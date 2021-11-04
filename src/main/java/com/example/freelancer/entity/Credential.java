@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "credential")
 public class Credential {
     @Id
     @Column(length = 100)
