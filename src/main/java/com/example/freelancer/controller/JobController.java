@@ -238,7 +238,10 @@ public class JobController {
                 bodyContent = bodyContent.replace("{Subject}", job.getSubject());
                 bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
                 bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
-                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
                 mailDTO.setBody(bodyContent);
@@ -302,7 +305,10 @@ public class JobController {
                 bodyContent = bodyContent.replace("{Subject}", job.getSubject());
                 bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
                 bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
-                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
@@ -368,7 +374,10 @@ public class JobController {
                 bodyContent = bodyContent.replace("{Subject}", job.getSubject());
                 bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
                 bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
-                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
@@ -432,7 +441,10 @@ public class JobController {
                 bodyContent = bodyContent.replace("{Subject}", job.getSubject());
                 bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
                 bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
-                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
@@ -495,7 +507,10 @@ public class JobController {
                 bodyContent = bodyContent.replace("{Subject}", job.getSubject());
                 bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
                 bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
-                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerImage}", freelancer.getThumbnail() == null ? "https://s.congtys.com/avatar/36I7568F1D-default.jpg" : freelancer.getThumbnail());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
