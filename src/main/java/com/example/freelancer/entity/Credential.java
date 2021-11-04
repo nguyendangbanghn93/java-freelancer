@@ -13,9 +13,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "credential")
 public class Credential {
     @Id
-    @Column(columnDefinition = "varchar(100)")
+    @Column(length = 100)
     private String accessToken;
     private String refreshToken;
     private Date createdAt;

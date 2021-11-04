@@ -10,9 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface FreelancerRepository extends JpaRepository<Freelancer,Integer> {
-    @Query("SELECT f FROM Freelancer f WHERE f.accountId = :accountId")
+    @Query("SELECT f FROM freelancer f WHERE f.accountId = :accountId")
     Optional<Freelancer> findByAccountId(@Param(value="accountId") Integer accountId);
 
-    @Query("SELECT f FROM Freelancer f WHERE f.status != 2 ORDER BY created_at DESC")
+    @Query("SELECT f FROM freelancer f WHERE f.status != 2 ORDER BY created_at DESC")
     Page<Freelancer> findAll(Pageable pageable);
 }
