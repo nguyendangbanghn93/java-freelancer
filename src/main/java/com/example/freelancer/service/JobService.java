@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -210,5 +211,32 @@ public class JobService {
 
     public List<Job> getListJobDoneByFreelancerId(Integer freelancerId) {
         return jobRepository.getListJobDoneByFreelancerId(freelancerId);
+    }
+
+    public long count() {
+        return jobRepository.count();
+    }
+
+    public Job createJob2(Job jobDTO) {
+        Job job = new Job();
+        job.setSalary(jobDTO.getSalary());
+        job.setSubject(jobDTO.getSubject());
+        job.setDescription(jobDTO.getDescription());
+        job.setType(jobDTO.getType());
+        if (jobDTO != null){
+            job.setType(jobDTO.getType());
+        }
+        job.setStatus(jobDTO.getStatus());
+        job.setResult(jobDTO.getResult());
+        job.setResponse_date(jobDTO.getResponse_date());
+        job.setAccountId(jobDTO.getAccountId());
+        job.setFreelancerId(jobDTO.getFreelancerId());
+        job.setCreated_at(new Date());
+        job.setUpdated_at(new Date());
+        job.setRate(jobDTO.getRate());
+        job.setComment(jobDTO.getComment());
+        jobRepository.save(job);
+
+        return job;
     }
 }

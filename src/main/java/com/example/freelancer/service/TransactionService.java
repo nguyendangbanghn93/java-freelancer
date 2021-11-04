@@ -89,4 +89,25 @@ public class TransactionService {
         Page<TransactionHistory> result = transactionHistoryRepository.findAll(pageable);
         return result;
     }
+
+    public long count() {
+        return transactionHistoryRepository.count();
+    }
+
+    public TransactionHistory createTransactionHistory2(TransactionHistory transactionHistoryItem) {
+        try {
+            TransactionHistory transactionHistory = new TransactionHistory();
+            transactionHistory.setAmount(transactionHistoryItem.getAmount());
+            transactionHistory.setAccountId(transactionHistoryItem.getAccountId());
+            transactionHistory.setCreatedAt(transactionHistoryItem.getCreatedAt());
+            transactionHistory.setUpdatedAt(new Date());
+            transactionHistory.setType(transactionHistoryItem.getType());
+            transactionHistoryRepository.save(transactionHistory);
+
+            return transactionHistory;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

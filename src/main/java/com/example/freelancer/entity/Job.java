@@ -43,16 +43,16 @@ public class Job {
     private Set<Rate> rateSet;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "accountId", insertable = false, updatable = false)
     private Account account;
-    @Column(insertable = false, updatable = false)
+    @Column
     private int accountId;
 
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "freelancerId")
+    @JoinColumn(name = "freelancerId", insertable = false, updatable = false)
     private Freelancer freelancer;
-    @Column(insertable = false, updatable = false)
+    @Column
     private int freelancerId;
     public JobDTO toJobDTO(){
         return new JobDTO(id,salary,subject,description,type,status,result,response_date,invited_user_id,accountId,freelancerId, created_at, updated_at, rate, comment);
@@ -78,5 +78,19 @@ public class Job {
             new AccountDTO(account),
             freelancer.toFreelancerDTO()
         );
+    }
+
+    public Job(double salary, String subject, String description, int type, int status, String result, Date response_date, double rate, String comment, int accountId, int freelancerId) {
+        this.salary = salary;
+        this.subject = subject;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.result = result;
+        this.response_date = response_date;
+        this.rate = rate;
+        this.comment = comment;
+        this.accountId = accountId;
+        this.freelancerId = freelancerId;
     }
 }
