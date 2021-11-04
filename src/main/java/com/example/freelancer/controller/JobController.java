@@ -153,6 +153,13 @@ public class JobController {
                         "                                <td class=\"content-cell\" style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;\">\n" +
                         "                                    <h1 style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;\">Hello!</h1>\n" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">{FreelancerName} refuse your \"{JobSubject}\" job, log in to FFlance to find another</p>\n" +
+                        "<div style=\"text-align-last: center;margin-top: 20px;\">\n" +
+                        "    <a href=\"#{jobPage}\" style=\"text-decoration: none;line-height: 16px;letter-spacing: .6px;color: #fff;background-color: #14a800;border-radius: 160px; box-sizing: border-box;vertical-align: middle;white-space: nowrap;padding: 10px 30px;font-size: 15px;font-stretch: 100%;\">Go to job</a>\n" +
+                        "</div>" +
+                        "<div>\n" +
+                        "    <h1 style=\"box-sizing: border-box;font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';color: #3d4852;font-size: 18px;font-weight: bold;margin-top: 0;text-align: left;\">Job detail :</h1>\n" +
+                        "<div><ul style=\"list-style: none;\"><li style=\"margin: unset;\"> <b>Subject</b> :  {Subject}</li><li style=\"margin: unset;\"> <b>Salary</b> :  {Salary}</li><li style=\"margin: unset;\"> <b>Owner</b> :  {Owner}</li><li style=\"margin: unset;\"> <b>Job description</b> :  <div>{jobDescription}</div></li></ul></div>\n" +
+                        "</div>" +
                         "                                    <p style=\"box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;\">Regards,<br>\n" +
                         "                                        FFlance</p>\n" +
                         "\n" +
@@ -177,6 +184,13 @@ public class JobController {
                         "        </td>\n" +
                         "    </tr>\n" +
                         "</table>";
+                bodyContent = bodyContent.replace("{Subject}", job.getSubject());
+                bodyContent = bodyContent.replace("{Salary}", String.valueOf(job.getSalary()));
+                bodyContent = bodyContent.replace("{Owner}", job.getAccount().getUsername());
+                bodyContent = bodyContent.replace("{jobDescription}", job.getDescription());
+                if (job.getDescription().length() > 1500) {
+                    bodyContent = bodyContent.replace("{jobDescription}", job.getDescription().substring(0, 1500));
+                }
                 bodyContent = bodyContent.replace("#{jobPage}", domainName + jobDTO.getId());
                 bodyContent = bodyContent.replace("{FreelancerName}", freelancer.getName());
                 bodyContent = bodyContent.replace("{JobSubject}", jobDTO.getSubject());
