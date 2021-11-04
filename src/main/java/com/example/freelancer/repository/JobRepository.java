@@ -11,28 +11,28 @@ import java.util.Date;
 import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job,Integer> {
-    @Query("SELECT j FROM job j WHERE j.freelancerId = :freelancerId AND j.status = 4")
+    @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId AND j.status = 4")
     List<Job> getTotalJobDone(@Param(value="freelancerId") Integer freelancerId);
 
-    @Query("SELECT j FROM job j WHERE j.freelancerId = :freelancerId ORDER BY j.id DESC ")
+    @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId ORDER BY j.id DESC ")
     List<Job> getListJobByFreelancerId(Integer freelancerId);
 
-    @Query("SELECT j FROM job j WHERE j.accountId = :accountId ORDER BY j.id DESC ")
+    @Query("SELECT j FROM Job j WHERE j.accountId = :accountId ORDER BY j.id DESC ")
     List<Job> getListJobByAccountId(Integer accountId);
 
-    @Query("SELECT j FROM job j WHERE j.freelancerId = :freelancerId AND j.status = 4 ORDER BY j.id DESC ")
+    @Query("SELECT j FROM Job j WHERE j.freelancerId = :freelancerId AND j.status = 4 ORDER BY j.id DESC ")
     List<Job> getListJobDoneByFreelancerId(Integer freelancerId);
 
-    @Query("SELECT j FROM job j WHERE j.accountId = :accountId AND j.status = 4 ORDER BY j.id DESC ")
+    @Query("SELECT j FROM Job j WHERE j.accountId = :accountId AND j.status = 4 ORDER BY j.id DESC ")
     List<Job> getListJobDoneByAccountId(Integer accountId);
 
-    @Query("SELECT j FROM job j WHERE j.accountId = :accountId AND j.freelancerId = :freelancerId ORDER BY j.id DESC ")
+    @Query("SELECT j FROM Job j WHERE j.accountId = :accountId AND j.freelancerId = :freelancerId ORDER BY j.id DESC ")
     List<Job> getListJobByAccountIdAndFreelancerId(Integer accountId, Integer freelancerId);
 
-    @Query("SELECT j FROM job j ORDER BY created_at DESC")
+    @Query("SELECT j FROM Job j ORDER BY created_at DESC")
     Page<Job> findAll(Pageable pageable);
 
-    @Query("SELECT j FROM job j WHERE j.status = :status")
+    @Query("SELECT j FROM Job j WHERE j.status = :status")
     List<Job> findAllByStatus(int status);
 
 //    @Query("SELECT DATE(m.updated_at),SUM(m.salary * 0.1) FROM Job m WHERE m.status = 4 AND m.updated_at BETWEEN :startDate and :endDate GROUP BY DATE(m.updated_at)")

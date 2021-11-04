@@ -12,6 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<Account> findAccountByUsername(String username);
     Optional<Account> findAccountByEmail(String username);
 
-    @Query("SELECT a FROM account a WHERE a.role = :role AND a.status != 2 ORDER BY createdAt DESC")
+    @Query("SELECT a FROM Account a WHERE a.role = :role AND a.status != 2 ORDER BY createdAt DESC")
     Page<Account> findAllByRole(Account.Role role, Pageable pageable);
 }
