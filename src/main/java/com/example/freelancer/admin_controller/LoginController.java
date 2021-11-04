@@ -48,7 +48,7 @@ public class LoginController {
                 }
             }
         } catch (Exception e) {
-            responseAPI.setMessage(e.toString() + e.getLocalizedMessage());
+            responseAPI.setMessage(e.toString());
             responseAPI.setStatus(APIStatusCode.ERROR);
         }
         return responseAPI;

@@ -25,5 +25,5 @@ public class Chat {
     private Job job;
 
     @Column(insertable = false, updatable = false)
-    private String jobId;
+    private int jobId;
 }
