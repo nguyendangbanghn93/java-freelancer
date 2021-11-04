@@ -23,7 +23,7 @@ public class Credential {
     private Date expiredAt;
     private int status;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "account_id")
     private Account account;
     @Column(insertable = false, updatable = false)
     private int accountId;
