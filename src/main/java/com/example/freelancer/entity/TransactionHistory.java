@@ -22,14 +22,21 @@ public class TransactionHistory {
     private int id;
     private double amount;
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "accountId", insertable = false, updatable = false)
     private Account account;
-    @Column(insertable = false, updatable = false)
+    @Column
     private int accountId;
     //1 = Withdraw , 2 = Charge
     private int type;
     private Date createdAt;
     private Date updatedAt;
+
+    public TransactionHistory(double amount, int accountId, int type, Date createdAt) {
+        this.amount = amount;
+        this.accountId = accountId;
+        this.type = type;
+        this.createdAt = createdAt;
+    }
 
     public TransactionHistoryDTO toTransactionHistoryDTO() {
         return new TransactionHistoryDTO(id, amount, new AccountDTO(account), accountId, createdAt, updatedAt, type);
