@@ -126,6 +126,15 @@ public class JobService {
                 systemConfigRepository.save(systemConfig);
             }
             jobRepository.save(job1);
+
+            if (job1.getStatus() == 4){
+                Optional<Double> rate = jobRepository.getAvgRateByFreelancerId(freelancer.getId());
+
+                if (rate.isPresent()){
+                    freelancer.setRate(Math.round(rate.get() * 2) / 2);
+                }
+                freelancerRepository.save(freelancer);
+            }
             return job1;
         }
         return null;

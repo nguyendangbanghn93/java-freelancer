@@ -14,6 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 //@ToString
+@Table(name = "freelancer")
 public class Freelancer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
