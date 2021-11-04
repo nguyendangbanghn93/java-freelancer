@@ -47,7 +47,10 @@ public class JobService {
             job.setSalary(jobDTO.getSalary());
             job.setSubject(jobDTO.getSubject());
             job.setDescription(jobDTO.getDescription());
-            job.setType(jobDTO.getType());
+            job.setType(2);
+            if (jobDTO != null){
+                job.setType(jobDTO.getType());
+            }
             job.setStatus(1);
             job.setResult(jobDTO.getResult());
             job.setResponse_date(new Date());
