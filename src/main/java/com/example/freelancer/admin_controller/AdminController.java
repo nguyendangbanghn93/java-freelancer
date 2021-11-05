@@ -397,7 +397,7 @@ public class AdminController {
 
     // region transaction
     @RequestMapping(method = RequestMethod.GET, value = "/transaction")
-    public ResponseAPI<TransactionRes> getListAccount(
+    public ResponseAPI<TransactionRes> getListTransaction(
             @RequestParam @Nullable Integer currentPage,
             @RequestParam @Nullable Integer pageSize
     ) {
@@ -413,7 +413,10 @@ public class AdminController {
             listPage.forEach((el) -> {
                 TransactionHistoryDTO tranDTO = el.toTransactionHistoryDTO();
                 AccountDTO accountDTO = tranDTO.getAccount();
-                accountDTO.setFreelancerDTO(freelancerService.findByAccountId(accountDTO.getId()).toFreelancerDTO2());
+                Freelancer freelancer = freelancerService.findByAccountId(accountDTO.getId());
+                if (freelancer != null) {
+                    accountDTO.setFreelancerDTO(freelancerService.findByAccountId(accountDTO.getId()).toFreelancerDTO2());
+                }
                 list.add(tranDTO);
             });
 
