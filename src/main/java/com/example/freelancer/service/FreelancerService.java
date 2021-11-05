@@ -36,6 +36,7 @@ public class FreelancerService {
         freelancer.setAverageIncome(freelancerDTO.getAverageIncome());
         freelancer.setLanguage(freelancerDTO.getLanguage());
         freelancer.setRate(freelancerDTO.getRate());
+        freelancer.setStatus(Freelancer.Status.ACTIVATE);
         freelancer.setAccount(account);
         System.out.println(account.toString());
         return freelancerRepository.save(freelancer);
