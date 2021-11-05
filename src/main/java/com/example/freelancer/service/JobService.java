@@ -231,8 +231,8 @@ public class JobService {
         job.setResponse_date(jobDTO.getResponse_date());
         job.setAccountId(jobDTO.getAccountId());
         job.setFreelancerId(jobDTO.getFreelancerId());
-        job.setCreated_at(new Date());
-        job.setUpdated_at(new Date());
+        job.setCreated_at(jobDTO.getCreated_at());
+        job.setUpdated_at(jobDTO.getUpdated_at());
         job.setRate(jobDTO.getRate());
         job.setComment(jobDTO.getComment());
         jobRepository.save(job);

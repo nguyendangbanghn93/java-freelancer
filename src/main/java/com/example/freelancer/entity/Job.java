@@ -80,7 +80,7 @@ public class Job {
         );
     }
 
-    public Job(double salary, String subject, String description, int type, int status, String result, Date response_date, double rate, String comment, int accountId, int freelancerId) {
+    public Job(double salary, String subject, String description, int type, int status, String result, Date response_date, double rate, String comment, int accountId, int freelancerId, Date created_at, Date updated_at) {
         this.salary = salary;
         this.subject = subject;
         this.description = description;
@@ -92,5 +92,7 @@ public class Job {
         this.comment = comment;
         this.accountId = accountId;
         this.freelancerId = freelancerId;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 }
