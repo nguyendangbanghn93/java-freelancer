@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
@@ -14,4 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     @Query("SELECT a FROM Account a WHERE a.role = :role AND a.status != 2 ORDER BY createdAt DESC")
     Page<Account> findAllByRole(Account.Role role, Pageable pageable);
+
+    @Query("SELECT a FROM Account a WHERE a.status != 2")
+    List<Account> findAll();
 }
